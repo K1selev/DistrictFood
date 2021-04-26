@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <integer name="weight_search" tools:ignore="MissingDefaultResource">10</integer>
+    <integer name="weight_filter" tools:ignore="MissingDefaultResource">5</integer>
+    <integer name="weight_cards" tools:ignore="MissingDefaultResource">77</integer>
+    <integer name="weight_panel" tools:ignore="MissingDefaultResource">8</integer>
+    <integer name="weight_main_screen" tools:ignore="MissingDefaultResource">92</integer>
+</resources>

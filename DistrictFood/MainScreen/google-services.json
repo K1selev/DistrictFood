@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "386669575062",
+    "project_id": "districtfood-f65b1",
+    "storage_bucket": "districtfood-f65b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386669575062:android:761b01977afc4fac563bb7",
+        "android_client_info": {
+          "package_name": "ru.techpark.districtfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386669575062-on2c2n85c7g0vremtpc2fm521qasv43u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfvOVpMUJ88ExR7gt9_sp7nZe987LAK-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386669575062-on2c2n85c7g0vremtpc2fm521qasv43u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,77 @@
+{
+  "Restaurant" :
+  [
+    {
+      "id": 0,
+      "like": false,
+      "middle_receipt": 300,
+      "name": "MacDonald's",
+      "score": "4.3",
+      "tags" :  [{
+                  "tag_with_itself": true,
+                  "tag_fast_food": true,
+                  "tag_sale": false
+                 }]
+     },
+     {
+       "id": 1,
+       "like": false,
+       "middle_receipt": 250,
+       "name": "KFC",
+       "score": "4.5",
+       "tags" :  [{
+                    "tag_with_itself": true,
+                    "tag_fast_food": true,
+                    "tag_sale": false
+                  }]
+     },
+     {
+       "id": 2,
+       "like": false,
+       "middle_receipt": 350,
+       "name": "Dinning Room",
+       "score": "4.8",
+       "tags" :  [{
+         "tag_with_itself": true,
+         "tag_fast_food": false,
+         "tag_sale": true
+       }]
+     },
+    {
+      "id": 3,
+      "like": false,
+      "middle_receipt": 350,
+      "name": "Dinning Room1",
+      "score": "4.8",
+      "tags" :  [{
+        "tag_with_itself": true,
+        "tag_fast_food": false,
+        "tag_sale": false
+      }]
+    },
+    {
+      "id": 4,
+      "like": false,
+      "middle_receipt": 350,
+      "name": "Dinning Room2",
+      "score": "4.8",
+      "tags" :  [{
+        "tag_with_itself": true,
+        "tag_fast_food": true,
+        "tag_sale": true
+      }]
+    },
+    {
+      "id": 5,
+      "like": false,
+      "middle_receipt": 350,
+      "name": "Dinning Room3",
+      "score": "4.8",
+      "tags" :  [{
+        "tag_with_itself": true,
+        "tag_fast_food": false,
+        "tag_sale": false
+      }]
+    }
+   ]
+ }
