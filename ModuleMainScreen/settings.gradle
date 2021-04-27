@@ -1,0 +1,2 @@
+include ':MainScreen'
+rootProject.name = "DistrictFood"
