@@ -1,5 +1,5 @@
 package ru.techpark.districtfood;
 
 public interface CallBackListener {
-    void onCallBack(String name);
+    void onCallBack(String ACTION, String name);
 }

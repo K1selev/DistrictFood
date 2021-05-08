@@ -37,7 +37,7 @@ public class FragmentSearch extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        search = (EditText) getActivity().findViewById(R.id.search);
+        search = getActivity().findViewById(R.id.search);
         search.setOnEditorActionListener(Search_Input);
     }
 
@@ -51,8 +51,10 @@ public class FragmentSearch extends Fragment{
                 v.clearFocus();
 
                 //в Search передается строка из поиска и в CardsAdapter посылается обновление
-                CardsAdapter.getInstance().setCards(Search.getInstance().search(v.getText().toString()),
-                            FragmentCards.getInstance().GetCardsViewModel());
+                CardsAdapter.getInstance().setCards(
+                        Search.getInstance().search(v.getText().toString()),
+                        FragmentCards.getInstance().GetCardsViewModel()
+                );
                 return true;
             }
             return false;

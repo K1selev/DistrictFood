@@ -156,7 +156,6 @@ public class FragmentPanel extends Fragment {
             } else if (map_fragment != null && map_fragment.isAdded()) {
                 transaction.remove(map_fragment);
             }
-            Log.d("test", "ssdsdsds");
             transaction.add(R.id.fragment_map, FragmentMap.getInstance(MapAction.ACTION_RESTAURANT_AROUND, ""));
 
             transaction.addToBackStack(null);

@@ -10,26 +10,19 @@ import retrofit2.http.Path;
 
 public interface CardApi {
 
-    class TagsPlain {
-        public boolean tag_fast_food;
-        public boolean tag_sale;
-        public boolean tag_with_itself;
-    }
-
     class CardPlain {
         public int id;
         public boolean like;
         public int middle_receipt;
         public String name;
         public float score;
-        public List<TagsPlain> tags;
+        public boolean tag_fast_food;
+        public boolean tag_sale;
+        public boolean tag_with_itself;
     }
 
     @GET("/Restaurant.json")
     Call<List<CardPlain>> getAll();
-
-    @GET("/Restaurant/{id}/tags.json")
-    Call<List<TagsPlain>> getTags(@Path("id") int id);
 
     //сообщает о нажатии на лайк
     class Like {

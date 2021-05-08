@@ -1,3 +1,0 @@
-include ':Auth'
-include ':MainScreen'
-rootProject.name = "DistrictFood"

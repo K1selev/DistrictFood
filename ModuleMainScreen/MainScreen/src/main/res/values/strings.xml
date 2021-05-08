@@ -20,4 +20,5 @@
     <string name="middle_receipt">Middle receipt:</string>
     <string name="rubble">₽</string>
     <string name="clear_filter">Clear Filter</string>
+    <string name="apply_filter">Apply Filter</string>
 </resources>

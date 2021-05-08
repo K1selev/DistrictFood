@@ -20,6 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import ru.techpark.districtfood.Constants;
+import ru.techpark.districtfood.MainScreen.CardsPreview.CardsAdapter;
+import ru.techpark.districtfood.MainScreen.CardsPreview.FragmentCards;
+import ru.techpark.districtfood.MainScreen.Search.Search;
 import ru.techpark.districtfood.R;
 
 public class FragmentFilter extends Fragment {
@@ -27,6 +31,7 @@ public class FragmentFilter extends Fragment {
     private EditText filter_location_max;
     private EditText filter_middle_receipt;
     private Button filter_clear_button;
+    private Button filter_apply_button;
     private ImageView score_filter_star1;
     private ImageView score_filter_star2;
     private ImageView score_filter_star3;
@@ -36,13 +41,7 @@ public class FragmentFilter extends Fragment {
     private CheckBox filter_fast_food;
     private CheckBox filter_sale;
     private static Bundle mBundleFilterState;
-    private final String NUMBER_STAR = "number_star";
-    private final String TEXT_MIDDLE_RECEIPT = "text_middle_receipt";
-    private final String TEXT_LOCATION_MAX = "text_location_max";
-    private final String TAG_WITH_ITSELF = "tag_with_itself";
-    private final String TAG_FAST_FOOD = "tag_fast_food";
-    private final String TAF_SALE = "tag_sale";
-    public int number_star = 0;
+    public float number_star = 0;
     public String text_middle_receipt = "";
     public String text_location_max = "";
     public boolean tag_with_itself = false;
@@ -60,10 +59,10 @@ public class FragmentFilter extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        filter_location_max = (EditText) view.findViewById(R.id.location_filter_max);
+        filter_location_max = view.findViewById(R.id.location_filter_max);
         filter_location_max.setOnEditorActionListener(Filter_location_max);
 
-        filter_middle_receipt = (EditText) view.findViewById(R.id.middle_receipt_filter);
+        filter_middle_receipt = view.findViewById(R.id.middle_receipt_filter);
         filter_middle_receipt.setOnEditorActionListener(Filter_middle_receipt);
 
         score_filter_star1 = view.findViewById(R.id.icon_star_1);
@@ -78,14 +77,35 @@ public class FragmentFilter extends Fragment {
         score_filter_star4.setOnClickListener(Filter_score);
         score_filter_star5.setOnClickListener(Filter_score);
 
-        filter_with_itself = (CheckBox) view.findViewById(R.id.with_itself);
-        filter_fast_food = (CheckBox) view.findViewById(R.id.fast_food);
-        filter_sale = (CheckBox) view.findViewById(R.id.sale);
+        filter_with_itself = view.findViewById(R.id.with_itself);
+        filter_fast_food = view.findViewById(R.id.fast_food);
+        filter_sale = view.findViewById(R.id.sale);
 
         filter_clear_button = view.findViewById(R.id.clean_filter);
         filter_clear_button.setOnClickListener(ClearButton);
+
+        filter_apply_button = view.findViewById(R.id.apply_filter);
+        filter_apply_button.setOnClickListener(ApplyFilterButton);
     }
 
+    private final  View.OnClickListener ApplyFilterButton = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            Bundle BundleKeyFilter = new Bundle();
+            BundleKeyFilter.putBoolean(Constants.TAG_WITH_ITSELF, filter_with_itself.isChecked());
+            BundleKeyFilter.putBoolean(Constants.TAG_FAST_FOOD, filter_fast_food.isChecked());
+            BundleKeyFilter.putBoolean(Constants.TAF_SALE, filter_sale.isChecked());
+            BundleKeyFilter.putFloat(Constants.NUMBER_STAR, number_star);
+            BundleKeyFilter.putString(Constants.TEXT_MIDDLE_RECEIPT, String.valueOf(filter_middle_receipt.getText()));
+
+            //в Apply передается состояние фильтра и в CardsAdapter посылается обновление
+            CardsAdapter.getInstance().setCards(
+                    ApplyFilter.getInstance().apply(BundleKeyFilter),
+                    FragmentCards.getInstance().GetCardsViewModel()
+            );
+        }
+    };
     private final View.OnClickListener ClearButton = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -157,22 +177,22 @@ public class FragmentFilter extends Fragment {
         if (mBundleFilterState == null) {
             mBundleFilterState = new Bundle();
         }
-        mBundleFilterState.putInt(NUMBER_STAR, number_star);
+        mBundleFilterState.putFloat(Constants.NUMBER_STAR, number_star);
 
         text_location_max = String.valueOf(filter_location_max.getText());
-        mBundleFilterState.putString(TEXT_LOCATION_MAX, text_location_max);
+        mBundleFilterState.putString(Constants.TEXT_LOCATION_MAX, text_location_max);
 
         text_middle_receipt = String.valueOf(filter_middle_receipt.getText());
-        mBundleFilterState.putString(TEXT_MIDDLE_RECEIPT, text_middle_receipt);
+        mBundleFilterState.putString(Constants.TEXT_MIDDLE_RECEIPT, text_middle_receipt);
 
         tag_with_itself = filter_with_itself.isChecked();
-        mBundleFilterState.putBoolean(TAG_WITH_ITSELF, tag_with_itself);
+        mBundleFilterState.putBoolean(Constants.TAG_WITH_ITSELF, tag_with_itself);
 
         tag_fast_food = filter_fast_food.isChecked();
-        mBundleFilterState.putBoolean(TAG_FAST_FOOD, tag_fast_food);
+        mBundleFilterState.putBoolean(Constants.TAG_FAST_FOOD, tag_fast_food);
 
         tag_sale = filter_sale.isChecked();
-        mBundleFilterState.putBoolean(TAF_SALE, tag_sale);
+        mBundleFilterState.putBoolean(Constants.TAF_SALE, tag_sale);
 
         outState = mBundleFilterState;
     }
@@ -184,22 +204,22 @@ public class FragmentFilter extends Fragment {
             savedInstanceState = mBundleFilterState;
         }
         if (savedInstanceState != null) {
-            number_star = savedInstanceState.getInt(NUMBER_STAR);
+            number_star = savedInstanceState.getInt(Constants.NUMBER_STAR);
             RefreshFilterScore(number_star);
 
-            text_location_max = savedInstanceState.getString(TEXT_LOCATION_MAX);
+            text_location_max = savedInstanceState.getString(Constants.TEXT_LOCATION_MAX);
             this.filter_location_max.setText(text_location_max);
 
-            text_middle_receipt = savedInstanceState.getString(TEXT_MIDDLE_RECEIPT);
+            text_middle_receipt = savedInstanceState.getString(Constants.TEXT_MIDDLE_RECEIPT);
             this.filter_middle_receipt.setText(text_middle_receipt);
 
-            tag_with_itself = savedInstanceState.getBoolean(TAG_WITH_ITSELF);
+            tag_with_itself = savedInstanceState.getBoolean(Constants.TAG_WITH_ITSELF);
             this.filter_with_itself.setChecked(tag_with_itself);
 
-            tag_fast_food = savedInstanceState.getBoolean(TAG_FAST_FOOD);
+            tag_fast_food = savedInstanceState.getBoolean(Constants.TAG_FAST_FOOD);
             this.filter_fast_food.setChecked(tag_fast_food);
 
-            tag_sale = savedInstanceState.getBoolean(TAF_SALE);
+            tag_sale = savedInstanceState.getBoolean(Constants.TAF_SALE);
             this.filter_sale.setChecked(tag_sale);
         }
     }
@@ -211,32 +231,32 @@ public class FragmentFilter extends Fragment {
         if (mBundleFilterState == null) {
             mBundleFilterState = new Bundle();
         }
-        mBundleFilterState.putInt(NUMBER_STAR, number_star);
+        mBundleFilterState.putFloat(Constants.NUMBER_STAR, number_star);
 
         text_location_max = String.valueOf(filter_location_max.getText());
-        mBundleFilterState.putString(TEXT_LOCATION_MAX, text_location_max);
+        mBundleFilterState.putString(Constants.TEXT_LOCATION_MAX, text_location_max);
 
         text_middle_receipt = String.valueOf(filter_middle_receipt.getText());
-        mBundleFilterState.putString(TEXT_MIDDLE_RECEIPT, text_middle_receipt);
+        mBundleFilterState.putString(Constants.TEXT_MIDDLE_RECEIPT, text_middle_receipt);
 
         tag_with_itself = filter_with_itself.isChecked();
-        mBundleFilterState.putBoolean(TAG_WITH_ITSELF, tag_with_itself);
+        mBundleFilterState.putBoolean(Constants.TAG_WITH_ITSELF, tag_with_itself);
 
         tag_fast_food = filter_fast_food.isChecked();
-        mBundleFilterState.putBoolean(TAG_FAST_FOOD, tag_fast_food);
+        mBundleFilterState.putBoolean(Constants.TAG_FAST_FOOD, tag_fast_food);
 
         tag_sale = filter_sale.isChecked();
-        mBundleFilterState.putBoolean(TAF_SALE, tag_sale);
+        mBundleFilterState.putBoolean(Constants.TAF_SALE, tag_sale);
     }
 
     //обновляет количество звезд в фильтре
-    private void RefreshFilterScore(int number_star){
+    private void RefreshFilterScore(float number_star){
         score_filter_star1.setImageResource(R.drawable.icon_score_clear);
         score_filter_star2.setImageResource(R.drawable.icon_score_clear);
         score_filter_star3.setImageResource(R.drawable.icon_score_clear);
         score_filter_star4.setImageResource(R.drawable.icon_score_clear);
         score_filter_star5.setImageResource(R.drawable.icon_score_clear);
-        switch (number_star) {
+        switch ((int) number_star) {
             case 0:
                 this.number_star = 0;
                 break;

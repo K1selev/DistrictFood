@@ -20,11 +20,9 @@ import ru.techpark.districtfood.Network.ApiRepo;
 public class CardRepo {
 
     private final static MutableLiveData<List<Card>> mCards = new MutableLiveData<>();
-    private final static MutableLiveData<List<Tags>> mCardsTags = new MutableLiveData<>();
     
     static {
         mCards.setValue(Collections.emptyList());
-        mCardsTags.setValue(Collections.emptyList());
     }
 
     private final Context mContext;
@@ -38,13 +36,6 @@ public class CardRepo {
     //уведомляет наблюдателей когда карточка изменяется
     public LiveData<List<Card>> getCards() {
         return Transformations.map(mCards, input -> {
-
-            return input;
-        });
-    }
-
-    public LiveData<List<Tags>> getTags() {
-        return Transformations.map(mCardsTags, input -> {
             return input;
         });
     }
@@ -87,23 +78,6 @@ public class CardRepo {
         });
     }
 
-    public void converterTags(final Card card) {
-        mCardApi.getTags(card.getId()).enqueue(new Callback<List<CardApi.TagsPlain>>() {
-            @Override
-            public void onResponse(Call<List<CardApi.TagsPlain>> call,
-                                   Response<List<CardApi.TagsPlain>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    mCardsTags.postValue(transformTags(response.body()));
-                }
-            }
-            @Override
-            public void onFailure(Call<List<CardApi.TagsPlain>> call, Throwable t) {
-                Log.e("CardRepo", "Failed to load", t);
-            }
-        });
-
-    }
-
     //получение и изменение данных карточек
     private static List<Card> transform(List<CardApi.CardPlain> plains) {
         List<Card> result = new ArrayList<>();
@@ -119,20 +93,6 @@ public class CardRepo {
         return result;
     }
 
-    private static List<Tags> transformTags(List<CardApi.TagsPlain> plains) {
-        List<Tags> result = new ArrayList<>();
-        for (CardApi.TagsPlain tagsPlain : plains) {
-            try {
-                Tags tags = mapTags(tagsPlain);
-                result.add(tags);
-                //Log.e("CardRepo", "Loaded " + card.getName());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
-
     private static Card map(CardApi.CardPlain cardPlain) throws ParseException {
         return new Card(
                 cardPlain.id,
@@ -140,15 +100,9 @@ public class CardRepo {
                 cardPlain.middle_receipt,
                 cardPlain.name,
                 cardPlain.score,
-                cardPlain.tags
-        );
-    }
-
-    private static Tags mapTags(CardApi.TagsPlain tagsPlain) throws ParseException {
-        return new Tags(
-                tagsPlain.tag_fast_food,
-                tagsPlain.tag_sale,
-                tagsPlain.tag_with_itself
+                cardPlain.tag_fast_food,
+                cardPlain.tag_sale,
+                cardPlain.tag_with_itself
         );
     }
 }

@@ -17,16 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.techpark.districtfood.CallBackListener;
+import ru.techpark.districtfood.MainScreen.Filter.ApplyFilter;
 import ru.techpark.districtfood.R;
 import ru.techpark.districtfood.MainScreen.Search.Search;
 
-public class FragmentCards extends Fragment implements CallBackListenerTags{
+public class FragmentCards extends Fragment{
 
     private RecyclerView recyclerView;
     private CardsViewModel cardsViewModel;
-    private TagsViewModel tagsViewModel;
     private CallBackListener callBackListener;
-    private CallBackListenerTags callBackListenerTags;
 
     @Nullable
     @Override
@@ -48,16 +47,14 @@ public class FragmentCards extends Fragment implements CallBackListenerTags{
             this.callBackListener = (CallBackListener) requireContext();
         }
 
-        this.callBackListenerTags = (CallBackListenerTags) this;
-        Log.d("test", String.valueOf(this.callBackListenerTags));
-
         Observer<List<Card>> observer = new Observer<List<Card>>() {
             @Override
             public void onChanged(List<Card> cards) {
                 if (cards != null) {
                     CardsAdapter.getInstance().setCards(cards, cardsViewModel,
-                            callBackListener, callBackListenerTags);
+                            callBackListener);
                     Search.getInstance().SetCards(cards);
+                    ApplyFilter.getInstance().SetCards(cards);
                 }
             }
         };
@@ -76,8 +73,6 @@ public class FragmentCards extends Fragment implements CallBackListenerTags{
         recyclerView = null;
     }
 
-
-
     public static FragmentCards sInstance;
     public FragmentCards() {
 
@@ -88,27 +83,8 @@ public class FragmentCards extends Fragment implements CallBackListenerTags{
         }
         return sInstance;
     }
-
     public CardsViewModel GetCardsViewModel() {
         return cardsViewModel;
     }
 
-    @Override
-    public void onCallBack(Card card) {
-        Observer<List<Tags>> observer = new Observer<List<Tags>>() {
-            @Override
-            public void onChanged(List<Tags> tags) {
-                if (tags != null) {
-                    CardsAdapter.getInstance().setTags(tags, tagsViewModel, callBackListenerTags);
-                }
-            }
-        };
-        tagsViewModel = new ViewModelProvider(getActivity())
-                .get(TagsViewModel.class);
-        tagsViewModel.converterTags(card);
-        tagsViewModel
-                .getTags()
-                .observe(getViewLifecycleOwner(), observer);
-
-    }
 }

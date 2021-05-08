@@ -28,6 +28,10 @@
             android:id="@+id/fragment_bookmarks"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        <FrameLayout
+            android:id="@+id/fragment_restaurant_tab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
 

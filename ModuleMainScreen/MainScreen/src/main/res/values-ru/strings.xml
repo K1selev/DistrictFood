@@ -21,4 +21,5 @@
     <string name="middle_receipt">Средний чек:</string>
     <string name="rubble">₽</string>
     <string name="clear_filter">Очистить фильтр</string>
+    <string name="apply_filter">Применить фильтр</string>
 </resources>

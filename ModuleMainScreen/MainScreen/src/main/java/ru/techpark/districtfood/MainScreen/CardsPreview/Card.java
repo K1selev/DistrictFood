@@ -1,7 +1,5 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
-import java.util.List;
-
 public class Card {
 
     private int mId;
@@ -9,16 +7,21 @@ public class Card {
     private int mMiddle_receipt;
     private float mScore;
     private boolean mIs_like;
-    private List<CardApi.TagsPlain> mTags;
+    private boolean mTag_with_itself;
+    private boolean mTag_fast_food;
+    private boolean mTag_sale;
 
     //получение из CardApi значения переменных для каждого ресторана
-    public Card(int id, boolean is_like, int middle_receipt, String name, float score, List<CardApi.TagsPlain> tags) {
+    public Card(int id, boolean is_like, int middle_receipt, String name, float score,
+                boolean tag_fast_food, boolean tag_sale, boolean tag_with_itself) {
         mId = id;
         mName = name;
         mMiddle_receipt = middle_receipt;
         mIs_like = is_like;
         mScore = score;
-        mTags = tags;
+        mTag_fast_food = tag_fast_food;
+        mTag_sale = tag_sale;
+        mTag_with_itself = tag_with_itself;
     }
 
     public Card() {}
@@ -27,7 +30,11 @@ public class Card {
         return mId;
     }
 
-    public List<CardApi.TagsPlain> getTags() { return mTags; }
+    public boolean getTagWithItself(){ return mTag_with_itself; }
+
+    public boolean getTagFastFood(){ return mTag_fast_food; }
+
+    public boolean getTagSale(){ return mTag_sale; }
 
     public String getName() {
         return mName;

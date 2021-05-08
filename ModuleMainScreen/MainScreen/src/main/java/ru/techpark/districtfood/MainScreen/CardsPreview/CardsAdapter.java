@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.techpark.districtfood.CallBackListener;
+import ru.techpark.districtfood.Constants;
 import ru.techpark.districtfood.Map.FragmentMap;
 import ru.techpark.districtfood.Map.MapAction;
 import ru.techpark.districtfood.Map.MapViewModel;
@@ -24,10 +25,8 @@ import ru.techpark.districtfood.R;
 public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
 
     private List<Card> mCards = new ArrayList<>();
-    private List<Tags> mCardsTags = new ArrayList<>();
     private CardsViewModel mCardsViewModel;
     private CallBackListener callBackListener;
-    private CallBackListenerTags callBackListenerTags;
 
     @NonNull
     @Override
@@ -39,22 +38,16 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CardsViewHolder holder, int position) {
         final Card card = mCards.get(position);
-        callBackListenerTags.onCallBack(card);
-        //Log.d("test", String.valueOf(mCards));
-        //final Tags cardsTags = mCardsTags.get(position);
         holder.mName.setText(card.getName());
         holder.mMiddleReceipt.setText(String.valueOf(card.getMiddle_receipt()));
         holder.mScore.setText(String.valueOf(card.getScore()));
         holder.IsLike(card.getIsLike());
 
-        //holder.IsTagWithItself(cardsTags.getTagWithItself());
-        //holder.IsTagFastFood(cardsTags.getTagFastFood());
-        //holder.IsTadSale(cardsTags.getTagSale());
         holder.mMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (callBackListener != null) {
-                    callBackListener.onCallBack(card.getName());
+                    callBackListener.onCallBack(Constants.ACTION_OPEN_MAP_TAB, card.getName());
                 }
             }
         });
@@ -62,6 +55,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
             @Override
             public void onClick(View v) {
                 mCardsViewModel.like(card);
+            }
+        });
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callBackListener != null) {
+                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, card.getName());
+                }
             }
         });
         holder.bind(mCards.size());
@@ -74,8 +75,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
 
     //срабатывает обновление recyclerView
     public void setCards(List<Card> cards, CardsViewModel mCardsViewModel,
-                         CallBackListener callBackListener, CallBackListenerTags callBackListenerTags) {
-        this.callBackListenerTags = callBackListenerTags;
+                         CallBackListener callBackListener) {
         this.callBackListener = callBackListener;
         this.mCardsViewModel = mCardsViewModel;
         mCards = cards;
@@ -85,10 +85,6 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
         this.mCardsViewModel = mCardsViewModel;
         mCards = cards;
         notifyDataSetChanged();
-    }
-
-    public void setTags(List<Tags> cardsTags, TagsViewModel tagsViewModel, CallBackListenerTags callBackListenerTags) {
-        this.mCardsTags = cardsTags;
     }
 
     public static CardsAdapter sInstance;

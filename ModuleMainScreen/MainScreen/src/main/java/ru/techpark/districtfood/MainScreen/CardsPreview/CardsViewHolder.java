@@ -1,6 +1,7 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,17 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.techpark.districtfood.R;
 
 public class CardsViewHolder extends RecyclerView.ViewHolder {
-    private ImageView img;
-
-    protected TextView mName;
+    protected ImageView img;
+    protected ImageView click_for_transition;
     protected boolean mIsLike;
     protected ImageButton mLikeBtn;
+    protected ImageButton mMapBtn;
     protected TextView mMiddleReceipt;
     protected TextView mScore;
-    protected ImageButton mMapBtn;
-    protected boolean mTagsWithItself;
-    protected boolean mTagsFastFood;
-    protected boolean mTagsSale;
+    protected TextView mName;
+
 
     public CardsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -32,6 +31,7 @@ public class CardsViewHolder extends RecyclerView.ViewHolder {
         mMiddleReceipt = itemView.findViewById(R.id.description);
         mScore = itemView.findViewById(R.id.score_preview);
         mMapBtn = itemView.findViewById(R.id.route);
+        click_for_transition = itemView.findViewWithTag(R.id.photo_restaurant);
     }
 
     public void bind(int a){
@@ -47,15 +47,5 @@ public class CardsViewHolder extends RecyclerView.ViewHolder {
 
     public void IsLike(boolean mIsLike){
         this.mIsLike = mIsLike;
-    }
-
-    public void IsTagWithItself(boolean mTagsWithItself){
-        this.mTagsWithItself = mTagsWithItself;
-    }
-    public void IsTagFastFood(boolean mTagsFastFood){
-        this.mTagsFastFood = mTagsFastFood;
-    }
-    public void IsTadSale(boolean mTagsSale){
-        this.mTagsSale = mTagsSale;
     }
 }
