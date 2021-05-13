@@ -1,9 +1,13 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,6 +31,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
     private List<Card> mCards = new ArrayList<>();
     private CardsViewModel mCardsViewModel;
     private CallBackListener callBackListener;
+    private Context context;
 
     @NonNull
     @Override
@@ -54,7 +59,18 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
         holder.mLikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCardsViewModel.like(card);
+                if(hasConnection(context)) {
+                    mCardsViewModel.like(card);
+                }
+                else  Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
+            }
+        });
+        holder.click_for_transition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callBackListener != null) {
+                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, card.getName());
+                }
             }
         });
         holder.img.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +81,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
                 }
             }
         });
-        holder.bind(mCards.size());
+        holder.bind();
     }
 
     @Override
@@ -75,16 +91,26 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
 
     //срабатывает обновление recyclerView
     public void setCards(List<Card> cards, CardsViewModel mCardsViewModel,
-                         CallBackListener callBackListener) {
+                         CallBackListener callBackListener, Context context) {
         this.callBackListener = callBackListener;
         this.mCardsViewModel = mCardsViewModel;
         mCards = cards;
+        this.context = context;
         notifyDataSetChanged();
     }
     public void setCards(List<Card> cards, CardsViewModel mCardsViewModel) {
         this.mCardsViewModel = mCardsViewModel;
         mCards = cards;
         notifyDataSetChanged();
+    }
+
+    public boolean hasConnection(final Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNW = cm.getActiveNetworkInfo();
+        if (activeNW != null && activeNW.isConnected()) {
+            return true;
+        }
+        return false;
     }
 
     public static CardsAdapter sInstance;

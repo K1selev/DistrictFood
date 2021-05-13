@@ -1,20 +1,35 @@
 package ru.techpark.districtfood.Bookmarks;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class BookmarksViewModel extends ViewModel {
+import java.util.List;
 
-    private MutableLiveData<String> mText;
+import ru.techpark.districtfood.CachingByRoom.Restaurant;
+import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
+import ru.techpark.districtfood.MainScreen.CardsPreview.Card;
+import ru.techpark.districtfood.MainScreen.CardsPreview.CardRepo;
 
-    public BookmarksViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is Bookmarks fragment");
+public class BookmarksViewModel extends AndroidViewModel {
+
+    private BookmarksRepo mRepo = new BookmarksRepo();
+    private LiveData<List<Restaurant>> mRestaurants = mRepo.getRestaurants();
+
+    public BookmarksViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    public LiveData<String> getSomething() {
-        return mText;
+    public LiveData<List<Restaurant>> getRestaurants() {
+        return mRestaurants;
+    }
+
+    public void like(RestaurantDao restaurantDao, List<Card> cards) {
+        mRepo.like(restaurantDao, cards);
     }
 
 }

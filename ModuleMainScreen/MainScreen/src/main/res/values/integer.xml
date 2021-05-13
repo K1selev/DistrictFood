@@ -2,4 +2,6 @@
 <resources>
     <dimen name="scale_icons_score">25dp</dimen>
     <dimen name="scale_text_filter">20sp</dimen>
+    <dimen name="scale_icons_score_for_bookmarks">15dp</dimen>
+    <dimen name="icon_size_for_bookmarks">48dp</dimen>
 </resources>

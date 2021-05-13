@@ -15,11 +15,16 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.techpark.districtfood.Bookmarks.BookmarksViewModel;
+import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 import ru.techpark.districtfood.Network.ApiRepo;
 
 public class CardRepo {
 
     private final static MutableLiveData<List<Card>> mCards = new MutableLiveData<>();
+    private List<Card> cardList;
+    private BookmarksViewModel bookmarksViewModel;
+    private RestaurantDao restaurantDao;
     
     static {
         mCards.setValue(Collections.emptyList());
@@ -60,6 +65,28 @@ public class CardRepo {
         });
     }
 
+    public void likeFromBookmarks(final Card card, BookmarksViewModel bookmarksViewModel,
+                                  RestaurantDao restaurantDao) {
+        this.bookmarksViewModel = bookmarksViewModel;
+        this.restaurantDao = restaurantDao;
+        mCardApi.like(card.getId(), new CardApi.Like(!card.getIsLike())).enqueue(new Callback<CardApi.Like>() {
+            @Override
+            public void onResponse(Call<CardApi.Like> call,
+                                   Response<CardApi.Like> response) {
+                if (response.isSuccessful()) {
+                    refreshFromBookmarks();
+                    // todo refreshSingle() in production :)
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardApi.Like> call, Throwable t) {
+                Log.d("Test", "Failed to like " + card.getName(), t);
+                t.printStackTrace();
+            }
+        });
+    }
+
     //обновление данных карточек
     public void refresh() {
         mCardApi.getAll().enqueue(new Callback<List<CardApi.CardPlain>>() {
@@ -68,6 +95,23 @@ public class CardRepo {
                                    Response<List<CardApi.CardPlain>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     mCards.postValue(transform(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CardApi.CardPlain>> call, Throwable t) {
+                Log.e("CardRepo", "Failed to load", t);
+            }
+        });
+    }
+
+    public void refreshFromBookmarks() {
+        mCardApi.getAll().enqueue(new Callback<List<CardApi.CardPlain>>() {
+            @Override
+            public void onResponse(Call<List<CardApi.CardPlain>> call,
+                                   Response<List<CardApi.CardPlain>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mCards.postValue(transformFromBookmarks(response.body()));
                 }
             }
 
@@ -90,6 +134,21 @@ public class CardRepo {
                 e.printStackTrace();
             }
         }
+        return result;
+    }
+
+    private List<Card> transformFromBookmarks(List<CardApi.CardPlain> plains) {
+        List<Card> result = new ArrayList<>();
+        for (CardApi.CardPlain cardPlain : plains) {
+            try {
+                Card card = map(cardPlain);
+                result.add(card);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        cardList = result;
+        bookmarksViewModel.like(restaurantDao, cardList);
         return result;
     }
 

@@ -10,4 +10,5 @@
     <color name="orange">#EAA744</color>
     <color name="background_filter">#E8E6DF</color>
     <color name="background_clear_button">#FF5722</color>
+    <color name="color_btn_reply_attempt">#3C5BF8</color>
 </resources>

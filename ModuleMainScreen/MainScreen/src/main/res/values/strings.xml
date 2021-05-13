@@ -21,4 +21,7 @@
     <string name="rubble">₽</string>
     <string name="clear_filter">Clear Filter</string>
     <string name="apply_filter">Apply Filter</string>
+    <string name="internet_connection">No internet connection available</string>
+    <string name="error_text">Error loading. Checking internet\'s connecting \n and reply attempt</string>
+    <string name="reply_attempt">Reply attempt</string>
 </resources>

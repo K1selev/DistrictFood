@@ -9,4 +9,5 @@ public class Constants {
     public static final String TAF_SALE = "tag_sale";
     public static final String ACTION_OPEN_MAP_TAB = "action_open_map_tab";
     public static final String ACTION_OPEN_RESTAURANT_TAB = "action_open_restaurant_tab";
+    public static final String ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS = "action_open_restaurant_tab_from_bookmarks";
 }

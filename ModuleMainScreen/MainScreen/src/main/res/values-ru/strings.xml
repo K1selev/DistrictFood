@@ -22,4 +22,7 @@
     <string name="rubble">₽</string>
     <string name="clear_filter">Очистить фильтр</string>
     <string name="apply_filter">Применить фильтр</string>
+    <string name="internet_connection">Отсутствует подключение к интернету</string>
+    <string name="error_text">Ошибка загрузки. Проверьте подключение к интеренту и повторите попытку</string>
+    <string name="reply_attempt">Повторить попытку</string>
 </resources>

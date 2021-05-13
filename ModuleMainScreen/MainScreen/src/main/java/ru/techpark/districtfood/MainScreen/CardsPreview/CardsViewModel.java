@@ -8,6 +8,9 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import ru.techpark.districtfood.Bookmarks.BookmarksViewModel;
+import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
+
 public class CardsViewModel extends AndroidViewModel {
 
     private CardRepo mRepo = new CardRepo(getApplication());
@@ -23,6 +26,11 @@ public class CardsViewModel extends AndroidViewModel {
 
     public void like(Card card) {
         mRepo.like(card);
+    }
+
+    public void likeFromBookmarks(Card card, BookmarksViewModel bookmarksViewModel,
+                                  RestaurantDao restaurantDao) {
+        mRepo.likeFromBookmarks(card, bookmarksViewModel, restaurantDao);
     }
 
     public void refresh() {

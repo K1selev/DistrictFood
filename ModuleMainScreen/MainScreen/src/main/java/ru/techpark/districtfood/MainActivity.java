@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import ru.techpark.districtfood.MainScreen.FragmentMainScreen;
+import ru.techpark.districtfood.MainScreen.Search.FragmentSearch;
 import ru.techpark.districtfood.Map.FragmentMap;
 import ru.techpark.districtfood.Map.MapAction;
 import ru.techpark.districtfood.Panel.FragmentPanel;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements CallBackListener{
         if (getSupportFragmentManager().findFragmentById(R.id.fragment_main_screen) == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_main_screen, new FragmentMainScreen())
+                    .add(R.id.fragment_main_screen, FragmentMainScreen.getInstance())
                     .commit();
         }
         if (getSupportFragmentManager().findFragmentById(R.id.fragment_panel) == null) {
@@ -66,27 +66,44 @@ public class MainActivity extends AppCompatActivity implements CallBackListener{
     public void onCallBack(String ACTION, String name) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (ACTION == Constants.ACTION_OPEN_MAP_TAB) {
-            Fragment main_screen_fragment = fragmentManager.findFragmentById(R.id.fragment_main_screen);
+        switch (ACTION) {
+            case Constants.ACTION_OPEN_MAP_TAB: {
+                Fragment main_screen_fragment = fragmentManager.findFragmentById(R.id.fragment_main_screen);
 
-            if (main_screen_fragment != null && main_screen_fragment.isAdded()) {
-                transaction.remove(main_screen_fragment);
-                transaction.add(R.id.fragment_map, FragmentMap.getInstance(MapAction.ACTION_ROUTE_OF_RESTAURANT, name));
+                if (main_screen_fragment != null && main_screen_fragment.isAdded()) {
+                    transaction.remove(main_screen_fragment);
+                    transaction.add(R.id.fragment_map, FragmentMap.getInstance(MapAction.ACTION_ROUTE_OF_RESTAURANT, name));
+                }
+
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
             }
+            case Constants.ACTION_OPEN_RESTAURANT_TAB: {
+                Fragment main_screen_fragment = fragmentManager.findFragmentById(R.id.fragment_main_screen);
 
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else if (ACTION == Constants.ACTION_OPEN_RESTAURANT_TAB) {
-            Fragment main_screen_fragment = fragmentManager.findFragmentById(R.id.fragment_main_screen);
+                if (main_screen_fragment != null && main_screen_fragment.isAdded()) {
+                    transaction.remove(main_screen_fragment);
+                    transaction.add(R.id.fragment_restaurant_tab, FragmentRestaurantTab.getInstance());
+                    FragmentRestaurantTab.getInstance().setName(name);
+                }
 
-            if (main_screen_fragment != null && main_screen_fragment.isAdded()) {
-                transaction.remove(main_screen_fragment);
-                transaction.add(R.id.fragment_restaurant_tab, FragmentRestaurantTab.getInstance());
-                FragmentRestaurantTab.getInstance().setName(name);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
             }
+            case Constants.ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS:
+                Fragment bookmarks_fragment = fragmentManager.findFragmentById(R.id.fragment_bookmarks);
 
-            transaction.addToBackStack(null);
-            transaction.commit();
+                if (bookmarks_fragment != null && bookmarks_fragment.isAdded()) {
+                    transaction.remove(bookmarks_fragment);
+                    transaction.add(R.id.fragment_restaurant_tab, FragmentRestaurantTab.getInstance());
+                    FragmentRestaurantTab.getInstance().setName(name);
+                }
+
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
         }
     }
     /*

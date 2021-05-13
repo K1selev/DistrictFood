@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:background="@drawable/lines_between_filters"
+        android:paddingBottom="5dp">
+
+        <FrameLayout android:id="@+id/frame"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+            <ImageView android:id="@+id/photo_restaurant"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:src="@drawable/food"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"/>
+
+            <ImageView android:id="@+id/circle_crop"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:src="@drawable/invisible_circle"
+                android:layout_gravity="center"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="75">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="10dp">
+                <TextView
+                    android:id="@+id/named_restaurant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Название ресторана"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Краткое описание"
+                    android:textSize="15sp"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/score_preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        tools:text="4.3"
+                        android:paddingEnd="5dp"/>
+                    <ImageView
+                        android:layout_width="@dimen/scale_icons_score_for_bookmarks"
+                        android:layout_height="@dimen/scale_icons_score_for_bookmarks"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icons_score"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/click_for_transition"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/like"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:src="@drawable/like"
+            android:layout_weight="10"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>
