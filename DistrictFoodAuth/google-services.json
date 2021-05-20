@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "634933395500",
+    "project_id": "districtfood2",
+    "storage_bucket": "districtfood2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634933395500:android:3f15a58fd1b3b6b5c25189",
+        "android_client_info": {
+          "package_name": "com.example.districtfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634933395500-fhu6dr0s9getb8nfcqjiec08j00ku0vf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.districtfood",
+            "certificate_hash": "5c996775a2f8badb64de6fb0ef296112a4785b94"
+          }
+        },
+        {
+          "client_id": "634933395500-68stkiosnt9v4hpiporbg8fmfa99f5q1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA1bwlzD6ENSLvhlPYGqIvXeM0hSdQPIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634933395500-68stkiosnt9v4hpiporbg8fmfa99f5q1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
