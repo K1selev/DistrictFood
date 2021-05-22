@@ -1,0 +1,2 @@
+include ':Auth'
+rootProject.name = "DistrictFood"
