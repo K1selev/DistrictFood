@@ -69,15 +69,14 @@
             </FrameLayout>
 
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/like"
                 android:layout_width="@android:dimen/app_icon_size"
                 android:layout_height="@android:dimen/app_icon_size"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:src="@drawable/like"
+                tools:background="@drawable/like"
                 />
             <ImageButton
                 android:id="@+id/route"

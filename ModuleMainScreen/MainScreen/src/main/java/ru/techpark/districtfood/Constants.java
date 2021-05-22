@@ -8,6 +8,10 @@ public class Constants {
     public static final String TAG_FAST_FOOD = "tag_fast_food";
     public static final String TAF_SALE = "tag_sale";
     public static final String ACTION_OPEN_MAP_TAB = "action_open_map_tab";
+    public static final String ACTION_RESTAURANT_AROUND = "action_restaurant_around";
+    public static final String ACTION_ROUTE_OF_RESTAURANT = "action_route_of_restaurant";
     public static final String ACTION_OPEN_RESTAURANT_TAB = "action_open_restaurant_tab";
     public static final String ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS = "action_open_restaurant_tab_from_bookmarks";
+    public static final String LIST_STATE = "ListState";
+    public static final String NAME_RESTAURANT = "name_restaurant";
 }

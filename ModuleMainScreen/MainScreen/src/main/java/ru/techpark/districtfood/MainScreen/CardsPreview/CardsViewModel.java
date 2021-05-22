@@ -14,13 +14,16 @@ import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 public class CardsViewModel extends AndroidViewModel {
 
     private CardRepo mRepo = new CardRepo(getApplication());
-    private LiveData<List<Card>> mCards = mRepo.getCards();
+    private RestaurantDao restaurantDao;
+    private LiveData<List<Card>> mCards = mRepo.getCards(restaurantDao);
+
 
     public CardsViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<Card>> getCards() {
+    public LiveData<List<Card>> getCards(RestaurantDao restaurantDao) {
+        this.restaurantDao = restaurantDao;
         return mCards;
     }
 

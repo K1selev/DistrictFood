@@ -1,6 +1,10 @@
 package ru.techpark.districtfood.CachingByRoom;
 
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -32,11 +36,14 @@ public class Restaurant {
     @ColumnInfo(name = "tagWithItself")
     private boolean mTagWithItself;
 
+    @ColumnInfo(name = "url_image")
+    private String mUrlImage;
+
     public Restaurant() {
     }
 
     public Restaurant(int mId, boolean mIsLike, int mMiddleReceipt, String mName, float mScore,
-                      boolean mTagFastFood, boolean mTagSale, boolean mTagWithItself) {
+                      boolean mTagFastFood, boolean mTagSale, boolean mTagWithItself, String url_image) {
         this.mId = mId;
         this.mIsLike = mIsLike;
         this.mMiddleReceipt = mMiddleReceipt;
@@ -45,6 +52,8 @@ public class Restaurant {
         this.mTagFastFood = mTagFastFood;
         this.mTagSale = mTagSale;
         this.mTagWithItself = mTagWithItself;
+        this.mUrlImage = url_image;
+
     }
 
     public int getId() {
@@ -79,6 +88,10 @@ public class Restaurant {
         return mTagWithItself;
     }
 
+    public String getUrlImage() {
+        return mUrlImage;
+    }
+
     public void setId(int mId) {
         this.mId = mId;
     }
@@ -109,5 +122,9 @@ public class Restaurant {
 
     public void setTagWithItself(boolean mTagWithItself) {
         this.mTagWithItself = mTagWithItself;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.mUrlImage = urlImage;
     }
 }

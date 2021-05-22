@@ -1,8 +1,8 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
-import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,17 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import ru.techpark.districtfood.R;
 
 public class CardsViewHolder extends RecyclerView.ViewHolder {
     protected ImageView img;
     protected ImageView click_for_transition;
     protected boolean mIsLike;
-    protected ImageButton mLikeBtn;
+    protected ImageView mLikeBtn;
     protected ImageButton mMapBtn;
     protected TextView mMiddleReceipt;
     protected TextView mScore;
     protected TextView mName;
+    protected String url_image;
 
     public CardsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -32,20 +35,28 @@ public class CardsViewHolder extends RecyclerView.ViewHolder {
         mMiddleReceipt = itemView.findViewById(R.id.description);
         mScore = itemView.findViewById(R.id.score_preview);
         mMapBtn = itemView.findViewById(R.id.route);
+
     }
 
     public void bind(){
-        img.setImageResource(R.drawable.food);
+        if (url_image != null) {
+            Picasso.get().load(url_image).resize(275, 150).centerCrop().into(img);
+        }
+
         if (mIsLike){
-            mLikeBtn.setImageResource(R.drawable.like_true);
+            mLikeBtn.setBackgroundResource(R.drawable.like_true);
         }else {
-            mLikeBtn.setImageResource(R.drawable.like);
+            mLikeBtn.setBackgroundResource(R.drawable.like);
         }
 
     }
 
     public void IsLike(boolean mIsLike){
         this.mIsLike = mIsLike;
+    }
+
+    public void setUrl_image(String url_image) {
+        this.url_image = url_image;
     }
 
 }

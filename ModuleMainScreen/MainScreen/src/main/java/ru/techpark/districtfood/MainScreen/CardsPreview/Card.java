@@ -10,10 +10,11 @@ public class Card {
     private boolean mTag_with_itself;
     private boolean mTag_fast_food;
     private boolean mTag_sale;
+    private String mUrl_Image;
 
     //получение из CardApi значения переменных для каждого ресторана
     public Card(int id, boolean is_like, int middle_receipt, String name, float score,
-                boolean tag_fast_food, boolean tag_sale, boolean tag_with_itself) {
+                boolean tag_fast_food, boolean tag_sale, boolean tag_with_itself, String url_image) {
         mId = id;
         mName = name;
         mMiddle_receipt = middle_receipt;
@@ -22,6 +23,7 @@ public class Card {
         mTag_fast_food = tag_fast_food;
         mTag_sale = tag_sale;
         mTag_with_itself = tag_with_itself;
+        mUrl_Image = url_image;
     }
 
     public Card() {}
@@ -50,6 +52,10 @@ public class Card {
 
     public float getScore() {
         return mScore;
+    }
+
+    public String getUrlImage() {
+        return mUrl_Image;
     }
 
     public void setName(String name) {

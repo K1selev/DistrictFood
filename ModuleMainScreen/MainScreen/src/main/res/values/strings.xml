@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">DistrictFood</string>
 
-    <string name="title_liked">Bookmarks</string>
-    <string name="title_dashboard">Main</string>
+    <string name="title_bookmarks">Bookmarks</string>
+    <string name="title_main_screen">Main</string>
     <string name="title_map">Map</string>
     <string name="title_profile">Profile</string>
 
@@ -24,4 +24,5 @@
     <string name="internet_connection">No internet connection available</string>
     <string name="error_text">Error loading. Checking internet\'s connecting \n and reply attempt</string>
     <string name="reply_attempt">Reply attempt</string>
+    <string name="not_bookmarks">You are haven\'t saved restaurants</string>
 </resources>

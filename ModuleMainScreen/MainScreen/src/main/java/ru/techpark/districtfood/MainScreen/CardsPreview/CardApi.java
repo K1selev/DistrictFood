@@ -19,6 +19,7 @@ public interface CardApi {
         public boolean tag_fast_food;
         public boolean tag_sale;
         public boolean tag_with_itself;
+        public String url_image;
     }
 
     @GET("/Restaurant.json")

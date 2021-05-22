@@ -1,26 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="@integer/weight_main_screen">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/fragment_search"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="@integer/weight_search"/>
+        android:layout_weight="@integer/weight_search"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/search"
+            android:layout_gravity="center_vertical"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:layout_weight="17"
+            tools:ignore="NestedWeights" />
+        <ImageButton
+            android:id="@+id/btn_clear_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/clear_text"
 
-    <FrameLayout
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/fragment_parameters"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="@integer/weight_filter"/>
+        android:layout_weight="@integer/weight_filter"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/search_parameters"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:layout_weight="8"
+            tools:ignore="NestedWeights,RtlSymmetry" />
+        <ImageButton
+            android:id="@+id/filter_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/filter_button_down"/>
+
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/fragment_cards"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="@integer/weight_cards"/>
+        android:layout_weight="@integer/weight_cards">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:filterTouchesWhenObscured="true"
+            >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cards_feed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:filterTouchesWhenObscured="true"
+                    />
+            </ScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <FrameLayout
+            android:id="@+id/filter_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 </LinearLayout>

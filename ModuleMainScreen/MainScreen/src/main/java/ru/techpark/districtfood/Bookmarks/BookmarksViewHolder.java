@@ -1,5 +1,6 @@
 package ru.techpark.districtfood.Bookmarks;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -7,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import ru.techpark.districtfood.R;
 
@@ -19,6 +22,7 @@ public class BookmarksViewHolder extends RecyclerView.ViewHolder{
     protected TextView mMiddleReceipt;
     protected TextView mScore;
     protected TextView mName;
+    protected String url_image;
 
     public BookmarksViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -32,7 +36,10 @@ public class BookmarksViewHolder extends RecyclerView.ViewHolder{
     }
 
     public void bind(){
-        img.setImageResource(R.drawable.food);
+        if (url_image != null) {
+            Picasso.get().load(url_image).resize(275, 150).centerCrop().into(img);
+        }
+
         if (mIsLike){
             mLikeBtn.setImageResource(R.drawable.like_true);
         }else {
@@ -43,6 +50,10 @@ public class BookmarksViewHolder extends RecyclerView.ViewHolder{
 
     public void IsLike(boolean mIsLike){
         this.mIsLike = mIsLike;
+    }
+
+    public void setUrl_image(String url_image) {
+        this.url_image = url_image;
     }
 
 }

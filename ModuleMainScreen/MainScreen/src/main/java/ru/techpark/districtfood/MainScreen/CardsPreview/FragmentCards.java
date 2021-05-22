@@ -1,139 +1,273 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.techpark.districtfood.ApplicationModified;
+import ru.techpark.districtfood.Bookmarks.BookmarksViewModel;
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 import ru.techpark.districtfood.CallBackListener;
+import ru.techpark.districtfood.Constants;
 import ru.techpark.districtfood.MainScreen.Filter.ApplyFilter;
-import ru.techpark.districtfood.R;
 import ru.techpark.districtfood.MainScreen.Search.Search;
+import ru.techpark.districtfood.R;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+import static java.lang.Math.abs;
 
-public class FragmentCards extends Fragment{
+
+public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
 
     private RecyclerView recyclerView;
     private CardsViewModel cardsViewModel;
     private CallBackListener callBackListener;
     private List<Card> cardList;
     private RestaurantDao restaurantDao;
+    private Parcelable listState;
+    private ProgressBar mProgressBar;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Context context;
+    private FragmentActivity activity;
+    private LifecycleOwner lifecycleOwner;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_cards, container, false);
-    }
+    public void onCreateView(View view, Context context) {
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        this.context = context;
 
         if (recyclerView == null) {
-            recyclerView = getActivity().findViewById(R.id.cards_feed);
+            recyclerView = view.findViewById(R.id.cards_feed);
         }
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        mSwipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.CYAN);
+
+    }
+
+
+    public void onResume(ProgressBar progressBar, FragmentActivity activity,
+                         LifecycleOwner lifecycleOwner) {
+
+        if (recyclerView == null) {
+            recyclerView = ApplicationModified.recyclerView;
+        }
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(CardsAdapter.getInstance());
 
-        if (requireContext() instanceof CallBackListener) {
-            this.callBackListener = (CallBackListener) requireContext();
+        this.activity = activity;
+        this.lifecycleOwner = lifecycleOwner;
+        this.mProgressBar = progressBar;
+
+        if (context instanceof CallBackListener) {
+            this.callBackListener = (CallBackListener) context;
         }
 
-        restaurantDao = ApplicationModified.from(getContext()).
+        restaurantDao = ApplicationModified.from(context).
                 getRestaurantDatabase().getRestaurantDao();
 
-        Observer<List<Card>> observer = new Observer<List<Card>>() {
-            @Override
-            public void onChanged(List<Card> cards) {
-                if (cards != null) {
-                    cardList = cards;
-                    CardsAdapter.getInstance().setCards(cards, cardsViewModel,
-                            callBackListener, getContext());
-                    if (cards.size() != 0) {
-                        Thread ThreadForGetRoomDatabase = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ArrayList<Integer> restaurantBefore =
-                                        CheckingForSimilarity(restaurantDao.getRestaurant1());
-                                ArrayList<Integer> restaurantAfter =
-                                        CheckingForSimilarity(completionRestaurant(cards));
-
-                                if (!restaurantBefore.equals(restaurantAfter)) {
-                                    restaurantDao.deleteAll();
-                                    restaurantDao.insertRestaurants(completionRestaurant(cards));
-                                }
-
-                            }
-                        });
-                        ThreadForGetRoomDatabase.start();
-                    }
-                    Search.getInstance().SetCards(cards);
-                    ApplyFilter.getInstance().SetCards(cards);
-                }
-            }
-        };
-        cardsViewModel = new ViewModelProvider(getActivity())
+        cardsViewModel = new ViewModelProvider(this.activity)
                 .get(CardsViewModel.class);
         cardsViewModel.refresh();
         cardsViewModel
-                .getCards()
-                .observe(getViewLifecycleOwner(), observer);
+                .getCards(restaurantDao)
+                .observe(this.lifecycleOwner, observer);
 
+        if (ApplicationModified.bundleForSaveStateRecyclerView != null) {
+            listState = ApplicationModified.bundleForSaveStateRecyclerView
+                    .getParcelable(Constants.LIST_STATE);
+            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
+
+        ApplicationModified.recyclerView = recyclerView;
+
+        // если список нельзя прокрутить верх, разрешается работа swipe_refresh
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                mSwipeRefreshLayout.setEnabled(!ApplicationModified.recyclerView
+                        .canScrollVertically(-1));
+            }
+        });
+
+    }
+
+    Observer<List<Card>> observer = new Observer<List<Card>>() {
+        @Override
+        public void onChanged(List<Card> cards) {
+            if (cards != null) {
+                cardList = cards;
+
+                if (hasConnection(context)) {
+                    if (cards.size() != 0) {
+
+                        Thread ThreadForGetRoomDatabase = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                restaurantDao.deleteAll();
+                                restaurantDao.insertRestaurants(completionRestaurant(cards));
+                                ApplicationModified.restaurantList = restaurantDao.getRestaurantAll();
+                            }
+                        });
+                        ThreadForGetRoomDatabase.start();
+
+                        try {
+                            ThreadForGetRoomDatabase.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        hideProgress();
+
+                        CardsAdapter.getInstance().setCards(cards, cardsViewModel,
+                                callBackListener, context,
+                                CheckOnHaveFiltersAndSearch());
+                    }
+
+                } else {
+                    Thread ThreadForGetRoomDatabase = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ApplicationModified.restaurantList = restaurantDao.getRestaurantAll();
+                        }
+                    });
+                    ThreadForGetRoomDatabase.start();
+
+                    try {
+                        ThreadForGetRoomDatabase.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    hideProgress();
+                    Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
+
+                    CardsAdapter.getInstance().setCards(callBackListener, context,
+                            CheckOnHaveFiltersAndSearch());
+                }
+            }
+        }
+    };
+
+    @Override
+    public void onRefresh() {
+
+        if (hasConnection(context)) {
+
+            cardsViewModel = null;
+            restaurantDao = null;
+
+            restaurantDao = ApplicationModified.from(context).
+                    getRestaurantDatabase().getRestaurantDao();
+
+            cardsViewModel = new ViewModelProvider(this.activity)
+                    .get(CardsViewModel.class);
+            cardsViewModel.refresh();
+            cardsViewModel
+                    .getCards(restaurantDao)
+                    .observe(lifecycleOwner, observer);
+
+            mSwipeRefreshLayout.setRefreshing(false);
+
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     private List<Restaurant> completionRestaurant(List<Card> cardsRoom) {
 
-        List<Restaurant> restaurants = new ArrayList<>();
+        List<Restaurant> restaurantAll = new ArrayList<>();
 
         for (int i = 0; i < cardsRoom.size(); i++){
             final Card cardRoom = cardsRoom.get(i);
-            if (cardRoom.getIsLike()) {
-                restaurants.add(new Restaurant(cardRoom.getId(), cardRoom.getIsLike(), cardRoom.getMiddle_receipt(),
-                        cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
-                        cardRoom.getTagSale(), cardRoom.getTagWithItself()));
-            }
+
+            restaurantAll.add(new Restaurant(cardRoom.getId(),
+                    cardRoom.getIsLike(), cardRoom.getMiddle_receipt(),
+                    cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
+                    cardRoom.getTagSale(), cardRoom.getTagWithItself(),
+                    cardRoom.getUrlImage()));
         }
 
-        return restaurants;
+        return restaurantAll;
     }
 
-    private ArrayList<Integer> CheckingForSimilarity(List<Restaurant> restaurants) {
-
-        ArrayList<Integer> arrayId = new ArrayList<>(restaurants.size());
-
-        for (int i = 0; i < restaurants.size(); i++){
-            arrayId.add(restaurants.get(i).getId());
-        }
-
-        return arrayId;
+    public void scrollToTop() {
+        recyclerView.smoothScrollToPosition(0);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        ApplicationModified.bundleForSaveStateRecyclerView = new Bundle();
+        ApplicationModified.bundleForSaveStateRecyclerView.putParcelable(Constants.LIST_STATE,
+                recyclerView.getLayoutManager().onSaveInstanceState());
         recyclerView = null;
     }
 
+    public void onViewStateRestored() {
+
+    }
+
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    public boolean hasConnection(final Context context) {
+        ConnectivityManager cm = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNW = cm.getActiveNetworkInfo();
+        return activeNW != null && activeNW.isConnected();
+    }
+
+    public List<Restaurant> CheckOnHaveFiltersAndSearch(){
+        List<Restaurant> newRestaurants;
+
+        if (ApplicationModified.StringSearch != null && !ApplicationModified.StringSearch.equals("")){
+
+            Search.getInstance().SetRestaurants(ApplicationModified.restaurantList);
+            newRestaurants = Search.getInstance().search(ApplicationModified.StringSearch);
+
+            ApplyFilter.getInstance().SetRestaurants(newRestaurants);
+            newRestaurants = ApplyFilter.getInstance().apply(ApplicationModified.bundleFilter);
+            ApplyFilter.getInstance().SetRestaurants(ApplicationModified.restaurantList);
+
+        } else {
+            ApplyFilter.getInstance().SetRestaurants(ApplicationModified.restaurantList);
+            Search.getInstance().SetRestaurants(ApplicationModified.restaurantList);
+            newRestaurants = ApplyFilter.getInstance().apply(ApplicationModified.bundleFilter);
+        }
+
+        return newRestaurants;
+    }
+
     public static FragmentCards sInstance;
-    public FragmentCards() {}
+    public FragmentCards() {
+
+    }
     public synchronized static FragmentCards getInstance(){
         if (sInstance == null) {
             sInstance = new FragmentCards();
@@ -149,5 +283,6 @@ public class FragmentCards extends Fragment{
     public RestaurantDao getRestaurantDao() {
         return restaurantDao;
     }
+
 
 }

@@ -1,12 +1,12 @@
 package ru.techpark.districtfood.Bookmarks;
 
-import android.app.Application;
-import android.util.Log;
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
 
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,18 +47,17 @@ public class BookmarksRepo {
 
     private List<Restaurant> completionRestaurant(List<Card> cardsRoom) {
 
-        List<Restaurant> restaurants = new ArrayList<>();
+        List<Restaurant> restaurantForBookmarks = new ArrayList<>();
 
         for (int i = 0; i < cardsRoom.size(); i++){
             final Card cardRoom = cardsRoom.get(i);
-            if (cardRoom.getIsLike()) {
-                restaurants.add(new Restaurant(cardRoom.getId(), cardRoom.getIsLike(), cardRoom.getMiddle_receipt(),
-                        cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
-                        cardRoom.getTagSale(), cardRoom.getTagWithItself()));
-            }
+
+            restaurantForBookmarks.add(new Restaurant(cardRoom.getId(), cardRoom.getIsLike(), cardRoom.getMiddle_receipt(),
+                    cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
+                    cardRoom.getTagSale(), cardRoom.getTagWithItself(), cardRoom.getUrlImage()));
         }
 
-        return restaurants;
+        return restaurantForBookmarks;
     }
 
 }

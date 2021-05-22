@@ -4,12 +4,12 @@
     <item
         android:id="@+id/navigation_bookmarks"
         android:icon="@drawable/like"
-        android:title="@string/title_liked" />
+        android:title="@string/title_bookmarks" />
 
     <item
         android:id="@+id/navigation_main_screen"
         android:icon="@drawable/main_screen"
-        android:title="@string/title_dashboard" />
+        android:title="@string/title_main_screen" />
     <item
         android:id="@+id/navigation_map"
         android:icon="@drawable/location"

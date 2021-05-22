@@ -39,7 +39,8 @@ public class CardRepo {
     }
 
     //уведомляет наблюдателей когда карточка изменяется
-    public LiveData<List<Card>> getCards() {
+    public LiveData<List<Card>> getCards(RestaurantDao restaurantDao) {
+
         return Transformations.map(mCards, input -> {
             return input;
         });
@@ -161,7 +162,8 @@ public class CardRepo {
                 cardPlain.score,
                 cardPlain.tag_fast_food,
                 cardPlain.tag_sale,
-                cardPlain.tag_with_itself
+                cardPlain.tag_with_itself,
+                cardPlain.url_image
         );
     }
 }

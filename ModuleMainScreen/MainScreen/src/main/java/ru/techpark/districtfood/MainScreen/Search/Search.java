@@ -3,26 +3,27 @@ package ru.techpark.districtfood.MainScreen.Search;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.techpark.districtfood.MainScreen.CardsPreview.Card;
+import ru.techpark.districtfood.CachingByRoom.Restaurant;
 
 public class Search{
 
-    private List<Card> cards;
+    private List<Restaurant> restaurants;
 
     public Search() { }
 
-    public List<Card> search(String restaurant){
+    public List<Restaurant> search(String name_restaurant){
 
-        List<Card> newCards = new ArrayList<>();
-        if (!restaurant.equals("")) {
-            for (Card card : cards) {
-                if (card.getName().toLowerCase().contains(restaurant.toLowerCase())) {
-                    newCards.add(card);
+        List<Restaurant> newRestaurants = new ArrayList<>();
+        if (!name_restaurant.equals("")) {
+            for (Restaurant restaurant : restaurants) {
+                if (restaurant.getName().toLowerCase().contains(name_restaurant.toLowerCase())) {
+                    newRestaurants.add(restaurant);
                 }
             }
-        } else newCards = cards;
+        } else newRestaurants = restaurants;
 
-        return newCards;
+        return newRestaurants;
+
 
     }
 
@@ -35,8 +36,8 @@ public class Search{
         return sInstance;
     }
 
-    public void SetCards(List<Card> cards){
-        this.cards = cards;
+    public void SetRestaurants(List<Restaurant> restaurants){
+        this.restaurants = restaurants;
     }
 
 }

@@ -11,7 +11,7 @@ import androidx.room.Room;
 
 public class RestaurantProvider extends ContentProvider {
 
-    private static final String TAG = RestaurantProvider.class.getSimpleName();
+    //private static final String TAG = RestaurantProvider.class.getSimpleName();
     public static final String AUTHORITY = "techpark.ru.districtfood.restaurantprovider";
     public static final String TABLE_RESTAURANT = "restaurant";
     public static final int RESTAURANT_TABLE_CODE = 100;

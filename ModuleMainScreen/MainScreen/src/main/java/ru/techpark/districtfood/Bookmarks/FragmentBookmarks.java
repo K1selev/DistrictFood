@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +41,7 @@ public class FragmentBookmarks extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setRetainInstance(true);
 
         if (recyclerView == null) {
             recyclerView = getActivity().findViewById(R.id.bookmarks_feed);
@@ -54,6 +56,15 @@ public class FragmentBookmarks extends Fragment implements LoaderManager.LoaderC
         Observer<List<Restaurant>> observer = new Observer<List<Restaurant>>() {
             @Override
             public void onChanged(List<Restaurant> restaurants) {
+
+                if (restaurants.size() == 0){
+                    TextView textView = view.findViewById(R.id.not_bookmarks);
+                    textView.setText(R.string.not_bookmarks);
+                } else {
+                    TextView textView = view.findViewById(R.id.not_bookmarks);
+                    textView.setText("");
+                }
+
                 BookmarksAdapter.getInstance().setCardsAndRestaurants(
                         restaurants,
                         FragmentCards.getInstance().getCardList(),

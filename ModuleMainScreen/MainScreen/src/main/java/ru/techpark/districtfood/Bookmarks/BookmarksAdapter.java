@@ -19,14 +19,13 @@ import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 import ru.techpark.districtfood.CallBackListener;
 import ru.techpark.districtfood.Constants;
-import ru.techpark.districtfood.MainActivity;
 import ru.techpark.districtfood.MainScreen.CardsPreview.Card;
 import ru.techpark.districtfood.MainScreen.CardsPreview.CardsViewModel;
 import ru.techpark.districtfood.R;
 
 public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
 
-    private List<Restaurant> mRestaurants = new ArrayList<>();
+    private List<Restaurant> mRestaurantForBookmarks = new ArrayList<>();
     private List<Card> mCards = new ArrayList<>();
     private CardsViewModel mCardsViewModel;
     private BookmarksViewModel mBookmarksViewModel;
@@ -43,19 +42,21 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull BookmarksViewHolder holder, int position) {
-        final Restaurant restaurant = mRestaurants.get(position);
-        holder.mName.setText(restaurant.getName());
-        holder.mMiddleReceipt.setText(String.valueOf(restaurant.getMiddleReceipt()));
-        holder.mScore.setText(String.valueOf(restaurant.getScore()));
-        holder.IsLike(restaurant.isLike());
+        final Restaurant restaurantForBookmarks = mRestaurantForBookmarks.get(position);
+
+        holder.setUrl_image(restaurantForBookmarks.getUrlImage());
+        holder.mName.setText(restaurantForBookmarks.getName());
+        holder.mMiddleReceipt.setText(String.valueOf(restaurantForBookmarks.getMiddleReceipt()));
+        holder.mScore.setText(String.valueOf(restaurantForBookmarks.getScore()));
+        holder.IsLike(restaurantForBookmarks.isLike());
 
         holder.mLikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(hasConnection(context)) {
+                if(hasConnection(context) && mCards.size() != 0) {
                     Card card = null;
                     for (Card mCard : mCards) {
-                        if (mCard.getName().equals(restaurant.getName())){
+                        if (mCard.getName().equals(restaurantForBookmarks.getName())){
                             card = mCard;
                             break;
                         }
@@ -70,7 +71,8 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
             @Override
             public void onClick(View v) {
                 if (callBackListener != null) {
-                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS, restaurant.getName());
+                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS,
+                            restaurantForBookmarks.getName());
                 }
             }
         });
@@ -78,7 +80,8 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
             @Override
             public void onClick(View v) {
                 if (callBackListener != null) {
-                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS, restaurant.getName());
+                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS,
+                            restaurantForBookmarks.getName());
                 }
             }
         });
@@ -87,11 +90,11 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
 
     @Override
     public int getItemCount() {
-        return mRestaurants.size();
+        return mRestaurantForBookmarks.size();
     }
 
     //срабатывает обновление recyclerView
-    public void setCardsAndRestaurants(List<Restaurant> restaurants,
+    public void setCardsAndRestaurants(List<Restaurant> restaurantForBookmarks,
                                        List<Card> cards,
                                        CardsViewModel cardsViewModel,
                                        BookmarksViewModel bookmarksViewModel,
@@ -103,7 +106,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
         this.mCardsViewModel = cardsViewModel;
         this.mBookmarksViewModel = bookmarksViewModel;
         this.mCards = cards;
-        this.mRestaurants = restaurants;
+        this.mRestaurantForBookmarks = restaurantForBookmarks;
         this.restaurantDao = restaurantDao;
         this.context = context;
         notifyDataSetChanged();
