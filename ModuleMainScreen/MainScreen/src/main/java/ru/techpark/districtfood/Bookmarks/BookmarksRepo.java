@@ -54,7 +54,8 @@ public class BookmarksRepo {
 
             restaurantForBookmarks.add(new Restaurant(cardRoom.getId(), cardRoom.getIsLike(), cardRoom.getMiddle_receipt(),
                     cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
-                    cardRoom.getTagSale(), cardRoom.getTagWithItself(), cardRoom.getUrlImage()));
+                    cardRoom.getTagSale(), cardRoom.getTagWithItself(), cardRoom.getUrlImage(),
+                    cardRoom.getX_coordinate(), cardRoom.getY_coordinate(), cardRoom.getZ_description()));
         }
 
         return restaurantForBookmarks;

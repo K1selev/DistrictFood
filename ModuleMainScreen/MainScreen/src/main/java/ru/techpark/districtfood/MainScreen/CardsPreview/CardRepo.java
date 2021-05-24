@@ -39,7 +39,7 @@ public class CardRepo {
     }
 
     //уведомляет наблюдателей когда карточка изменяется
-    public LiveData<List<Card>> getCards(RestaurantDao restaurantDao) {
+    public LiveData<List<Card>> getCards() {
 
         return Transformations.map(mCards, input -> {
             return input;
@@ -60,7 +60,7 @@ public class CardRepo {
 
             @Override
             public void onFailure(Call<CardApi.Like> call, Throwable t) {
-                Log.d("Test", "Failed to like " + card.getName(), t);
+                Log.d("test", "Failed to like " + card.getName(), t);
                 t.printStackTrace();
             }
         });
@@ -82,7 +82,7 @@ public class CardRepo {
 
             @Override
             public void onFailure(Call<CardApi.Like> call, Throwable t) {
-                Log.d("Test", "Failed to like " + card.getName(), t);
+                Log.d("test", "Failed to like " + card.getName(), t);
                 t.printStackTrace();
             }
         });
@@ -163,7 +163,10 @@ public class CardRepo {
                 cardPlain.tag_fast_food,
                 cardPlain.tag_sale,
                 cardPlain.tag_with_itself,
-                cardPlain.url_image
+                cardPlain.url_image,
+                cardPlain.x_coordinate,
+                cardPlain.y_coordinate,
+                cardPlain.z_description
         );
     }
 }

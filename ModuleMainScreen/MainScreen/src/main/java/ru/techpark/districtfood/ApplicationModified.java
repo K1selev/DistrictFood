@@ -3,12 +3,14 @@ package ru.techpark.districtfood;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import java.util.List;
 
+import ru.techpark.districtfood.Bookmarks.BookmarksViewModel;
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 import ru.techpark.districtfood.MainScreen.CardsPreview.Card;
@@ -32,6 +34,13 @@ public class ApplicationModified extends Application {
     public static String StringSearch;
     public static List<Restaurant> restaurantList;
     public static boolean enabled_recyclerView = true;
+    public static List<Card> cardList;
+    public static CardsViewModel cardsViewModel;
+    public static BookmarksViewModel bookmarksViewModel;
+    public static RestaurantDao restaurantDao;
+    public static final Bundle bundle_for_maps = new Bundle();
+
+    public static Context context123;
 
     public static ApplicationModified Instance;
 

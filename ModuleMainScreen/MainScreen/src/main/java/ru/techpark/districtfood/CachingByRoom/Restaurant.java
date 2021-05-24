@@ -39,11 +39,21 @@ public class Restaurant {
     @ColumnInfo(name = "url_image")
     private String mUrlImage;
 
+    @ColumnInfo(name = "x_coordinate")
+    private float mX_coordinate;
+
+    @ColumnInfo(name = "y_coordinate")
+    private float mY_coordinate;
+
+    @ColumnInfo(name = "z_description")
+    private String mZ_description;
+
     public Restaurant() {
     }
 
     public Restaurant(int mId, boolean mIsLike, int mMiddleReceipt, String mName, float mScore,
-                      boolean mTagFastFood, boolean mTagSale, boolean mTagWithItself, String url_image) {
+                      boolean mTagFastFood, boolean mTagSale, boolean mTagWithItself, String url_image,
+                      float x_coordinate, float y_coordinate, String z_description) {
         this.mId = mId;
         this.mIsLike = mIsLike;
         this.mMiddleReceipt = mMiddleReceipt;
@@ -53,6 +63,9 @@ public class Restaurant {
         this.mTagSale = mTagSale;
         this.mTagWithItself = mTagWithItself;
         this.mUrlImage = url_image;
+        this.mX_coordinate = x_coordinate;
+        this.mY_coordinate = y_coordinate;
+        this.mZ_description = z_description;
 
     }
 
@@ -126,5 +139,29 @@ public class Restaurant {
 
     public void setUrlImage(String urlImage) {
         this.mUrlImage = urlImage;
+    }
+
+    public String getZ_description() {
+        return mZ_description;
+    }
+
+    public void setZ_description(String mZ_description) {
+        this.mZ_description = mZ_description;
+    }
+
+    public float getY_coordinate() {
+        return mY_coordinate;
+    }
+
+    public void setY_coordinate(float mY_coordinate) {
+        this.mY_coordinate = mY_coordinate;
+    }
+
+    public float getX_coordinate() {
+        return mX_coordinate;
+    }
+
+    public void setX_coordinate(float mX_coordinate) {
+        this.mX_coordinate = mX_coordinate;
     }
 }

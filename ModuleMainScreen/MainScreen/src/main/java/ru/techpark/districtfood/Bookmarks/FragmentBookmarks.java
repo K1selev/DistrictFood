@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import ru.techpark.districtfood.ApplicationModified;
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.CallBackListener;
 import ru.techpark.districtfood.MainScreen.CardsPreview.FragmentCards;
@@ -81,6 +82,7 @@ public class FragmentBookmarks extends Fragment implements LoaderManager.LoaderC
         bookmarksViewModel
                 .getRestaurants()
                 .observe(getViewLifecycleOwner(), observer);
+        ApplicationModified.bookmarksViewModel = bookmarksViewModel;
     }
 
     @Override

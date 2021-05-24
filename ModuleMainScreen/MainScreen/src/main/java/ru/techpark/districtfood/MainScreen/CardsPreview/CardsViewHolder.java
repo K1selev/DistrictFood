@@ -21,6 +21,7 @@ public class CardsViewHolder extends RecyclerView.ViewHolder {
     protected ImageView mLikeBtn;
     protected ImageButton mMapBtn;
     protected TextView mMiddleReceipt;
+    protected TextView mDescription;
     protected TextView mScore;
     protected TextView mName;
     protected String url_image;
@@ -32,7 +33,8 @@ public class CardsViewHolder extends RecyclerView.ViewHolder {
         click_for_transition = itemView.findViewById(R.id.click_for_transition);
         mName = itemView.findViewById(R.id.named_restaurant);
         mLikeBtn = itemView.findViewById(R.id.like);
-        mMiddleReceipt = itemView.findViewById(R.id.description);
+        mMiddleReceipt = itemView.findViewById(R.id.middle_receipt);
+        mDescription = itemView.findViewById(R.id.description);
         mScore = itemView.findViewById(R.id.score_preview);
         mMapBtn = itemView.findViewById(R.id.route);
 

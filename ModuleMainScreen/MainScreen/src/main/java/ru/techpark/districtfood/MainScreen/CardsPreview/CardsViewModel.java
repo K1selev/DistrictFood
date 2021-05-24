@@ -1,6 +1,7 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -14,16 +15,14 @@ import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 public class CardsViewModel extends AndroidViewModel {
 
     private CardRepo mRepo = new CardRepo(getApplication());
-    private RestaurantDao restaurantDao;
-    private LiveData<List<Card>> mCards = mRepo.getCards(restaurantDao);
+    private LiveData<List<Card>> mCards = mRepo.getCards();
 
 
     public CardsViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<Card>> getCards(RestaurantDao restaurantDao) {
-        this.restaurantDao = restaurantDao;
+    public LiveData<List<Card>> getCards() {
         return mCards;
     }
 

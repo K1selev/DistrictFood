@@ -19,8 +19,4 @@ public class MapViewModel extends ViewModel {
         return mText;
     }
 
-    public void Action(String ACTION, String name){
-        MapAction.getInstance().Router(ACTION, name);
-    }
-
 }

@@ -72,7 +72,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
             public void onClick(View v) {
                 if (callBackListener != null) {
                     callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS,
-                            restaurantForBookmarks.getName());
+                            restaurantForBookmarks);
                 }
             }
         });
@@ -81,7 +81,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
             public void onClick(View v) {
                 if (callBackListener != null) {
                     callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB_FROM_BOOKMARKS,
-                            restaurantForBookmarks.getName());
+                            restaurantForBookmarks);
                 }
             }
         });

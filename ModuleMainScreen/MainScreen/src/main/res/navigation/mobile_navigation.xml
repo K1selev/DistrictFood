@@ -58,17 +58,58 @@
         android:id="@+id/navigation_card"
         android:name="ru.techpark.districtfood.RestaurantTab.FragmentRestaurantTab"
         android:label="@string/title_main_screen"
-        tools:layout="@layout/fragment_restaurant_tab" />
+        tools:layout="@layout/fragment_restaurant_tab" >
+        <action
+            android:id="@+id/action_navigation_card_to_fragmentFeedbacks_for_cards"
+            app:destination="@id/fragmentFeedbacks_for_cards"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_navigation_card_to_navigation_map_route"
+            app:destination="@id/navigation_map_route"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_card_from_bookmarks"
         android:name="ru.techpark.districtfood.RestaurantTab.FragmentRestaurantTab"
         android:label="@string/title_main_screen"
-        tools:layout="@layout/fragment_restaurant_tab" />
+        tools:layout="@layout/fragment_restaurant_tab" >
+        <action
+            android:id="@+id/action_navigation_card_from_bookmarks_to_fragmentFeedbacks_for_bookmarks"
+            app:destination="@id/fragmentFeedbacks_for_bookmarks"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_navigation_card_from_bookmarks_to_navigation_map_route"
+            app:destination="@id/navigation_map_route"
+
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_map_route"
         android:name="ru.techpark.districtfood.Map.FragmentMap"
         android:label="@string/title_main_screen"
-        tools:layout="@layout/fragment_restaurant_tab" />
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/fragmentFeedbacks_for_cards"
+        android:name="ru.techpark.districtfood.RestaurantTab.FragmentFeedbacks"
+        android:label="@string/title_feedbacks"
+        tools:layout="@layout/fragment_feedbacks"/>
+    <fragment
+        android:id="@+id/fragmentFeedbacks_for_bookmarks"
+        android:name="ru.techpark.districtfood.RestaurantTab.FragmentFeedbacks"
+        android:label="@string/title_feedbacks"
+        tools:layout="@layout/fragment_feedbacks"/>
 </navigation>

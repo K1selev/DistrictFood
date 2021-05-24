@@ -40,6 +40,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
         final Restaurant restaurantAll = mRestaurantAll.get(position);
 
         holder.setUrl_image(restaurantAll.getUrlImage());
+        holder.mDescription.setText(restaurantAll.getZ_description());
         holder.mName.setText(restaurantAll.getName());
         holder.mMiddleReceipt.setText(String.valueOf(restaurantAll.getMiddleReceipt()));
         holder.mScore.setText(String.valueOf(restaurantAll.getScore()));
@@ -49,7 +50,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
             @Override
             public void onClick(View v) {
                 if (callBackListener != null) {
-                    callBackListener.onCallBack(Constants.ACTION_OPEN_MAP_TAB, restaurantAll.getName());
+                    callBackListener.onCallBack(Constants.ACTION_OPEN_MAP_TAB, restaurantAll);
                 }
             }
         });
@@ -76,7 +77,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
             @Override
             public void onClick(View v) {
                 if (callBackListener != null) {
-                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll.getName());
+                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll);
                 }
             }
         });
@@ -84,7 +85,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
             @Override
             public void onClick(View v) {
                 if (callBackListener != null) {
-                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll.getName());
+                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll);
                 }
             }
         });

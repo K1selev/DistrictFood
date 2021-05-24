@@ -2,14 +2,11 @@ package ru.techpark.districtfood.MainScreen.CardsPreview;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -22,13 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.techpark.districtfood.ApplicationModified;
-import ru.techpark.districtfood.Bookmarks.BookmarksViewModel;
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 import ru.techpark.districtfood.CallBackListener;
@@ -37,15 +31,13 @@ import ru.techpark.districtfood.MainScreen.Filter.ApplyFilter;
 import ru.techpark.districtfood.MainScreen.Search.Search;
 import ru.techpark.districtfood.R;
 
-import static java.lang.Math.abs;
-
 
 public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
 
     private RecyclerView recyclerView;
-    private CardsViewModel cardsViewModel;
+    //private CardsViewModel cardsViewModel;
     private CallBackListener callBackListener;
-    private List<Card> cardList;
+    //private List<Card> cardList;
     private RestaurantDao restaurantDao;
     private Parcelable listState;
     private ProgressBar mProgressBar;
@@ -91,11 +83,11 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
         restaurantDao = ApplicationModified.from(context).
                 getRestaurantDatabase().getRestaurantDao();
 
-        cardsViewModel = new ViewModelProvider(this.activity)
+        ApplicationModified.cardsViewModel = new ViewModelProvider(this.activity)
                 .get(CardsViewModel.class);
-        cardsViewModel.refresh();
-        cardsViewModel
-                .getCards(restaurantDao)
+        ApplicationModified.cardsViewModel.refresh();
+        ApplicationModified.cardsViewModel
+                .getCards()
                 .observe(this.lifecycleOwner, observer);
 
         if (ApplicationModified.bundleForSaveStateRecyclerView != null) {
@@ -105,6 +97,7 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
         }
 
         ApplicationModified.recyclerView = recyclerView;
+        //ApplicationModified.cardsViewModel = cardsViewModel;
 
         // если список нельзя прокрутить верх, разрешается работа swipe_refresh
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -120,8 +113,11 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
     Observer<List<Card>> observer = new Observer<List<Card>>() {
         @Override
         public void onChanged(List<Card> cards) {
+
             if (cards != null) {
-                cardList = cards;
+
+                ApplicationModified.cardList = cards;
+                //cardList = cards;
 
                 if (hasConnection(context)) {
                     if (cards.size() != 0) {
@@ -144,7 +140,7 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
 
                         hideProgress();
 
-                        CardsAdapter.getInstance().setCards(cards, cardsViewModel,
+                        CardsAdapter.getInstance().setCards(cards, ApplicationModified.cardsViewModel,
                                 callBackListener, context,
                                 CheckOnHaveFiltersAndSearch());
                     }
@@ -179,17 +175,17 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
 
         if (hasConnection(context)) {
 
-            cardsViewModel = null;
+            ApplicationModified.cardsViewModel = null;
             restaurantDao = null;
 
             restaurantDao = ApplicationModified.from(context).
                     getRestaurantDatabase().getRestaurantDao();
 
-            cardsViewModel = new ViewModelProvider(this.activity)
+            ApplicationModified.cardsViewModel = new ViewModelProvider(this.activity)
                     .get(CardsViewModel.class);
-            cardsViewModel.refresh();
-            cardsViewModel
-                    .getCards(restaurantDao)
+            ApplicationModified.cardsViewModel.refresh();
+            ApplicationModified.cardsViewModel
+                    .getCards()
                     .observe(lifecycleOwner, observer);
 
             mSwipeRefreshLayout.setRefreshing(false);
@@ -211,7 +207,8 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
                     cardRoom.getIsLike(), cardRoom.getMiddle_receipt(),
                     cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
                     cardRoom.getTagSale(), cardRoom.getTagWithItself(),
-                    cardRoom.getUrlImage()));
+                    cardRoom.getUrlImage(), cardRoom.getX_coordinate(),
+                    cardRoom.getY_coordinate(), cardRoom.getZ_description()));
         }
 
         return restaurantAll;
@@ -275,10 +272,10 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
         return sInstance;
     }
     public CardsViewModel GetCardsViewModel() {
-        return cardsViewModel;
+        return ApplicationModified.cardsViewModel;
     }
     public List<Card> getCardList() {
-        return cardList;
+        return ApplicationModified.cardList;
     }
     public RestaurantDao getRestaurantDao() {
         return restaurantDao;

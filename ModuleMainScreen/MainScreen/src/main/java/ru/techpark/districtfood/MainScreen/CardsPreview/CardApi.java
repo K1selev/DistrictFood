@@ -1,5 +1,7 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
+import android.util.Log;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,6 +22,9 @@ public interface CardApi {
         public boolean tag_sale;
         public boolean tag_with_itself;
         public String url_image;
+        public float x_coordinate;
+        public float y_coordinate;
+        public String z_description;
     }
 
     @GET("/Restaurant.json")

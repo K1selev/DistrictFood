@@ -6,6 +6,7 @@
     <string name="title_main_screen">Главная</string>
     <string name="title_map">Карта</string>
     <string name="title_profile">Профиль</string>
+    <string name="title_feedbacks">Отзывы</string>
 
     <string name="search">Поиск</string>
     <string name="search_parameters">Параметры поиска</string>
@@ -26,4 +27,10 @@
     <string name="error_text">Ошибка загрузки. Проверьте подключение к интеренту и повторите попытку</string>
     <string name="reply_attempt">Повторить попытку</string>
     <string name="not_bookmarks">У вас нет сохраненных заведений</string>
+
+    <string name="location_permission_denied">Отказано в разрешении на местоположение</string>
+    <string name="permission_required_toast">Требуется разрешение</string>
+    <string name="permission_rationale_location">Без доступа к вашему местоположению, не будут показаны ближайшие рестораны</string>
+    <string name="feedback">Оставить отзыв</string>
+    <string name="feedbacks">Отзывы</string>
 </resources>

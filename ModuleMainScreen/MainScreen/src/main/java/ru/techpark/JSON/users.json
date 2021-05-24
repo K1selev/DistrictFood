@@ -10,7 +10,10 @@
       "tag_with_itself": true,
       "tag_fast_food": true,
       "tag_sale": false,
-      "url_image": "https://i.pinimg.com/originals/19/5a/de/195ade04424293f36fb4187557e62d2f.jpg"
+      "url_image": "https://i.pinimg.com/originals/19/5a/de/195ade04424293f36fb4187557e62d2f.jpg",
+      "z_description": "Хорошее заведение с недорогими ценами",
+      "x_coordinate": 55.77175006573671,
+      "y_coordinate": 37.68184642459872
      },
      {
        "id": 1,
@@ -21,51 +24,66 @@
        "tag_with_itself": true,
        "tag_fast_food": true,
        "tag_sale": false,
-       "url_image": "https://bestfoodlogistics.com/wp-content/uploads/2018/06/KFC-Logo_edited-1.jpg"
+       "url_image": "https://bestfoodlogistics.com/wp-content/uploads/2018/06/KFC-Logo_edited-1.jpg",
+       "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
+       "x_coordinate": 55.773025342016695,
+       "y_coordinate": 37.67690543637803
      },
      {
        "id": 2,
        "like": false,
        "middle_receipt": 350,
-       "name": "Dinning Room",
+       "name": "Бар Бистрофф",
        "score": "4.8",
        "tag_with_itself": true,
        "tag_fast_food": false,
        "tag_sale": true,
-       "url_image": "https://s1.1zoom.ru/big0/971/376930-sepik.jpg"
+       "url_image": "https://s1.1zoom.ru/big0/971/376930-sepik.jpg",
+       "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
+       "x_coordinate": 55.770187282310964,
+       "y_coordinate": 37.68610997604037
      },
     {
       "id": 3,
       "like": false,
       "middle_receipt": 350,
-      "name": "Dinning Room1",
+      "name": "GreenDin",
       "score": "1.5",
       "tag_with_itself": true,
       "tag_fast_food": false,
       "tag_sale": false,
-      "url_image": "https://i.artfile.ru/5616x3744_640101_[www.ArtFile.ru].jpg"
+      "url_image": "https://i.artfile.ru/5616x3744_640101_[www.ArtFile.ru].jpg",
+      "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
+      "x_coordinate": 55.76970168043541,
+      "y_coordinate": 37.686349652087955
     },
     {
       "id": 4,
       "like": false,
       "middle_receipt": 350,
-      "name": "Dinning Room2",
+      "name": "PhoU",
       "score": "3.1",
       "tag_with_itself": true,
       "tag_fast_food": true,
       "tag_sale": true,
-      "url_image": "https://www.ejin.ru/wp-content/uploads/2017/09/8-1176.jpg"
+      "url_image": "https://www.ejin.ru/wp-content/uploads/2017/09/8-1176.jpg",
+      "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
+      "x_coordinate": 55.77159796084261,
+      "y_coordinate": 37.682420429128676
     },
     {
       "id": 5,
       "like": false,
       "middle_receipt": 350,
-      "name": "Dinning Room3",
+      "name": "Теремок",
       "score": "2.8",
       "tag_with_itself": true,
       "tag_fast_food": false,
       "tag_sale": false,
-      "url_image": "https://w-dog.ru/wallpapers/5/3/514766626933323/myaso-kolbasy-ovoshhi-zelen-kapusta-pomidory-limon-shashlyk-shpazhki-palochki-sosiski-podzharennye-pomidor-ogurec.jpg"
+      "url_image": "https://w-dog.ru/wallpapers/5/3/514766626933323/myaso-kolbasy-ovoshhi-zelen-kapusta-pomidory-limon-shashlyk-shpazhki-palochki-sosiski-podzharennye-pomidor-ogurec.jpg",
+      "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
+      "x_coordinate": 55.77165836890148,
+      "y_coordinate": 37.68215304118523
     },
     {
       "id": 6,
@@ -76,7 +94,10 @@
       "tag_with_itself": true,
       "tag_fast_food": true,
       "tag_sale": false,
-      "url_image": "https://avatars.mds.yandex.net/get-zen_doc/1856484/pub_5d8b65445d636200af94b0ab_5d8b659becfb8000b00eb309/scale_1200"
+      "url_image": "https://avatars.mds.yandex.net/get-zen_doc/1856484/pub_5d8b65445d636200af94b0ab_5d8b659becfb8000b00eb309/scale_1200",
+      "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
+      "x_coordinate": 55.772699404865534,
+      "y_coordinate": 37.67658482459562
     },
     {
       "id": 7,
@@ -87,7 +108,10 @@
       "tag_with_itself": true,
       "tag_fast_food": false,
       "tag_sale": false,
-      "url_image": "https://avatars.mds.yandex.net/get-zen_doc/195350/pub_5b2e352cc2fba000aa1deaa5_5b2e37f16628cb00a819a90c/scale_1200"
+      "url_image": "https://avatars.mds.yandex.net/get-zen_doc/195350/pub_5b2e352cc2fba000aa1deaa5_5b2e37f16628cb00a819a90c/scale_1200",
+      "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
+      "x_coordinate": 55.77146689049164,
+      "y_coordinate": 37.67901948019465
     }
    ]
  }

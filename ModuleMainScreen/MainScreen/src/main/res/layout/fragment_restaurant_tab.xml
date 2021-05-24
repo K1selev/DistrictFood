@@ -1,14 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/Name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_gravity="center"/>
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/photo_restaurant_tab"
+            android:layout_width="match_parent"
+            android:layout_height="@android:dimen/thumbnail_height"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/food"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <TextView
+                android:id="@+id/named_restaurant_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Название ресторана"
+                android:textSize="30sp"
+                android:layout_weight="80"/>
+
+            <ImageView
+                android:id="@+id/like_cards"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:scaleType="centerCrop"
+                tools:background="@drawable/like"
+                android:layout_weight="5"
+                />
+            <ImageButton
+                android:id="@+id/route_cards"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:scaleType="centerCrop"
+                android:background="@android:color/transparent"
+                android:src="@drawable/location"
+                android:padding="5dp"
+                android:layout_weight="15"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/description_tab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Краткое описание"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/middle_receipt_tab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    tools:text="Средний чек"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/score_preview_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        tools:text="4.3"
+                        android:paddingEnd="5dp"/>
+                    <ImageView
+                        android:layout_width="@dimen/scale_icons_score"
+                        android:layout_height="@dimen/scale_icons_score"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icons_score"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/btn_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feedbacks"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/quantum_grey"
+            android:layout_gravity="end"
+            />
+
+        <EditText
+            android:id="@+id/feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/scale_text_filter"
+            android:hint="@string/feedback"
+            android:background="@android:color/transparent"
+            android:elegantTextHeight="true"
+            android:paddingStart="15dp"
+            android:paddingBottom="5dp"
+            android:inputType="textAutoCorrect"
+            android:imeOptions="actionDone"/>
+    </LinearLayout>
 
 </FrameLayout>
