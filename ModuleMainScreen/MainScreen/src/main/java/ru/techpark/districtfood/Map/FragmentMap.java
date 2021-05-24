@@ -190,6 +190,7 @@ public class FragmentMap extends Fragment implements
 
                             com.google.maps.model.LatLng location = new com.google.maps.model.LatLng(
                                     lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                            ApplicationModified.myLocation = location;
 
                             GO_ACTION(location);
                         } else {

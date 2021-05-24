@@ -3,20 +3,21 @@ package ru.techpark.districtfood;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+
+import com.google.maps.model.LatLng;
 
 import java.util.List;
 
 import ru.techpark.districtfood.Bookmarks.BookmarksViewModel;
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
+import ru.techpark.districtfood.CachingByRoom.RestaurantsDatabase;
 import ru.techpark.districtfood.MainScreen.CardsPreview.Card;
 import ru.techpark.districtfood.MainScreen.CardsPreview.CardsViewModel;
 import ru.techpark.districtfood.Network.ApiRepo;
-import ru.techpark.districtfood.CachingByRoom.RestaurantsDatabase;
 
 public class ApplicationModified extends Application {
 
@@ -39,6 +40,7 @@ public class ApplicationModified extends Application {
     public static BookmarksViewModel bookmarksViewModel;
     public static RestaurantDao restaurantDao;
     public static final Bundle bundle_for_maps = new Bundle();
+    public static LatLng myLocation;
 
     public static Context context123;
 

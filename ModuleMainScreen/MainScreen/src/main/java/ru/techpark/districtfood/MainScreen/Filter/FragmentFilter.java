@@ -3,7 +3,6 @@ package ru.techpark.districtfood.MainScreen.Filter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,6 +101,7 @@ public class FragmentFilter extends Fragment {
             ApplicationModified.bundleFilter.putBoolean(Constants.TAF_SALE, filter_sale.isChecked());
             ApplicationModified.bundleFilter.putFloat(Constants.NUMBER_STAR, number_star);
             ApplicationModified.bundleFilter.putString(Constants.TEXT_MIDDLE_RECEIPT, String.valueOf(filter_middle_receipt.getText()));
+            ApplicationModified.bundleFilter.putString(Constants.TEXT_LOCATION_MAX, String.valueOf(filter_location_max.getText()));
 
 
             if (ApplicationModified.StringSearch != null && !ApplicationModified.StringSearch.equals("")){
