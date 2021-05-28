@@ -1,10 +1,16 @@
 package ru.techpark.districtfood.MainScreen.Filter;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -15,9 +21,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.material.snackbar.Snackbar;
 
 import ru.techpark.districtfood.ApplicationModified;
 import ru.techpark.districtfood.Constants;
@@ -26,7 +42,7 @@ import ru.techpark.districtfood.MainScreen.CardsPreview.FragmentCards;
 import ru.techpark.districtfood.MainScreen.Search.Search;
 import ru.techpark.districtfood.R;
 
-public class FragmentFilter extends Fragment {
+public class FragmentFilter extends Fragment{
 
     private EditText filter_location_max;
     private EditText filter_middle_receipt;
@@ -46,6 +62,11 @@ public class FragmentFilter extends Fragment {
     public boolean tag_with_itself = false;
     public boolean tag_fast_food = false;
     public boolean tag_sale = false;
+    private View layout;
+
+    private boolean locationPermissionGranted;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private Location lastKnownLocation;
 
     @Nullable
     @Override
@@ -58,13 +79,17 @@ public class FragmentFilter extends Fragment {
         super.onDestroy();
     }
 
-    @SuppressLint("CutPasteId")
+    @SuppressLint({"CutPasteId", "ClickableViewAccessibility"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        layout = view.findViewById(R.id.main_layout_filter);
+
         filter_location_max = view.findViewById(R.id.location_filter_max);
         filter_location_max.setOnEditorActionListener(Filter_location_max);
+        filter_location_max.setOnTouchListener(Click_Filter_location_max);
+
 
         filter_middle_receipt = view.findViewById(R.id.middle_receipt_filter);
         filter_middle_receipt.setOnEditorActionListener(Filter_middle_receipt);
@@ -173,6 +198,17 @@ public class FragmentFilter extends Fragment {
                 handled = true;
             }
             return handled;
+        }
+    };
+    private final View.OnTouchListener Click_Filter_location_max = new View.OnTouchListener() {
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                getLocationPermission();
+                updateLocationUI();
+            }
+            return false;
         }
     };
     private final TextView.OnEditorActionListener Filter_middle_receipt = new TextView.OnEditorActionListener() {
@@ -304,4 +340,66 @@ public class FragmentFilter extends Fragment {
                 break;
         }
     }
+
+    private void getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(ApplicationModified.context123,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true;
+            filter_location_max.setEnabled(true);
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissionLauncher.launch(
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+    }
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                locationPermissionGranted = false;
+                if (isGranted) {
+                    locationPermissionGranted = true;
+
+                    filter_location_max.setEnabled(true);
+                } else {
+                    Snackbar.make(layout, R.string.permission_rationale_location_from_map,
+                            Snackbar.LENGTH_LONG)
+                            .show();
+                    filter_location_max.setEnabled(false);
+                }
+                updateLocationUI();
+            });
+
+    private void updateLocationUI() {
+        if (locationPermissionGranted) {
+            getDeviceLocation();
+        } else {
+            lastKnownLocation = null;
+        }
+    }
+
+    private void getDeviceLocation() {
+
+        Places.initialize(ApplicationModified.context123, "${MAPS_API_KEY}");
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+
+        try {
+            if (locationPermissionGranted) {
+                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(requireActivity(), new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            lastKnownLocation = task.getResult();
+                            ApplicationModified.myLocation = new com.google.maps.model.LatLng(
+                                    lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                        }
+                    }
+                });
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage(), e);
+        }
+    }
+
 }

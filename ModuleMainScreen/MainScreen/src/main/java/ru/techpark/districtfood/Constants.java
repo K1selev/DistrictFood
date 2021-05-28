@@ -22,4 +22,12 @@ public class Constants {
     public static final String ACTION_OPEN_RESTAURANT_FEEDBACKS_FROM_CARDS = "action_open_restaurant_feedbacks_from_cards";
     public static final String LIST_STATE = "ListState";
     public static final String NAME_RESTAURANT = "name_restaurant";
+    public static final String ACTION_EDIT_PROFILE_TO_PROFILE = "action_edit_profile_to_profile";
+    public static final String ACTION_LOGIN_TO_REGISTER = "action_login_to_register";
+    public static final String ACTION_LOGIN_TO_PROFILE = "action_login_to_profile";
+    public static final String ACTION_PROFILE_TO_EDIT_PROFILE = "action_profile_to_edit_profile";
+    public static final String ACTION_PROFILE_TO_LOGIN = "action_profile_to_login";
+    public static final String ACTION_REGISTER_TO_PROFILE = "action_register_register_to_profile";
+    public static final String ACTION_REGISTER_TO_LOGIN = "action_register_register_to_login";
+
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -97,7 +99,6 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
         }
 
         ApplicationModified.recyclerView = recyclerView;
-        //ApplicationModified.cardsViewModel = cardsViewModel;
 
         // если список нельзя прокрутить верх, разрешается работа swipe_refresh
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -237,8 +238,22 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
         ConnectivityManager cm = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNW = cm.getActiveNetworkInfo();
+
         return activeNW != null && activeNW.isConnected();
+
     }
+
+    private boolean checkWifiOnAndConnected() {
+        WifiManager wifiMgr = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        if (wifiMgr.isWifiEnabled()) {
+            WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+            return wifiInfo.getNetworkId() != -1;
+        } else {
+            return false;
+        }
+    }
+
 
     public List<Restaurant> CheckOnHaveFiltersAndSearch(){
         List<Restaurant> newRestaurants;

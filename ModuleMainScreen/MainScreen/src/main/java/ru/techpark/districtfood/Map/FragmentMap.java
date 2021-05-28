@@ -1,5 +1,6 @@
 package ru.techpark.districtfood.Map;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -26,11 +29,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.material.snackbar.Snackbar;
 
 import ru.techpark.districtfood.ApplicationModified;
 import ru.techpark.districtfood.Constants;
@@ -56,9 +61,12 @@ public class FragmentMap extends Fragment implements
     private boolean locationPermissionGranted;
 
     private Location lastKnownLocation;
+    private CameraPosition cameraPosition;
 
     private static final String KEY_LOCATION = "location";
+    private static final String KEY_CAMERA_POSITION = "camera_position";
     private Bundle arguments;
+    private View mLayout;
 
     public FragmentMap() {
     }
@@ -85,7 +93,7 @@ public class FragmentMap extends Fragment implements
         });
 
         Places.initialize(ApplicationModified.context123, "${MAPS_API_KEY}");
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
@@ -96,7 +104,7 @@ public class FragmentMap extends Fragment implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (map != null) {
-            //outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
+            outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
             outState.putParcelable(KEY_LOCATION, lastKnownLocation);
         }
         super.onSaveInstanceState(outState);
@@ -107,11 +115,14 @@ public class FragmentMap extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
 
         arguments = getArguments();
+        mLayout = view.findViewById(R.id.main_layout);
 
         if (savedInstanceState != null) {
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         } else if (ApplicationModified.bundle_for_maps.getParcelable(KEY_LOCATION) != null) {
             lastKnownLocation = ApplicationModified.bundle_for_maps.getParcelable(KEY_LOCATION);
+            cameraPosition = ApplicationModified.bundle_for_maps.getParcelable(KEY_CAMERA_POSITION);
         }
 
     }
@@ -125,15 +136,20 @@ public class FragmentMap extends Fragment implements
 
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
-
+        map.getUiSettings().setMyLocationButtonEnabled(true);
         // Prompt the user for permission.
         getLocationPermission();
 
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
 
-        // Get the current location of the device and set the position of the map.
-        //getDeviceLocation();
+        map.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+
+            }
+        });
+
     }
 
     private void getLocationPermission() {
@@ -141,9 +157,15 @@ public class FragmentMap extends Fragment implements
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        } /*else if (shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            PermissionUtils.RationaleDialog.newInstance(PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION, false)
+                    .show(getChildFragmentManager(), "dialog");
+        }*/
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissionLauncher.launch(
+                    Manifest.permission.ACCESS_FINE_LOCATION);
         }
     }
 
@@ -154,15 +176,11 @@ public class FragmentMap extends Fragment implements
         try {
             if (locationPermissionGranted) {
                 map.setMyLocationEnabled(true);
-                map.getUiSettings().setMyLocationButtonEnabled(true);
                 map.setOnMarkerClickListener(this);
                 getDeviceLocation();
-                //GO_ACTION(null);
             } else {
                 map.setMyLocationEnabled(false);
-                map.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
-                //getLocationPermission();
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
@@ -173,7 +191,7 @@ public class FragmentMap extends Fragment implements
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(getActivity(), new OnCompleteListener<Location>() {
+                locationResult.addOnCompleteListener( (MainActivity) requireActivity(), new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
@@ -182,10 +200,12 @@ public class FragmentMap extends Fragment implements
                             if (lastKnownLocation == null) {
                                 lastKnownLocation = task.getResult();
                             }
-                            if (lastKnownLocation != null) {
+                            if (lastKnownLocation != null && cameraPosition == null) {
                                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            } else {
+                                map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                             }
 
                             com.google.maps.model.LatLng location = new com.google.maps.model.LatLng(
@@ -206,36 +226,39 @@ public class FragmentMap extends Fragment implements
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        locationPermissionGranted = false;
-        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
-            // If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                locationPermissionGranted = true;
-            }
-        }
-
-        updateLocationUI();
-    }
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                locationPermissionGranted = false;
+                if (isGranted) {
+                    locationPermissionGranted = true;
+                } else {
+                    Snackbar.make(mLayout, R.string.permission_rationale_location_from_map,
+                            Snackbar.LENGTH_LONG)
+                            .show();
+                }
+                updateLocationUI();
+            });
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (map != null) {
-            //outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
+            ApplicationModified.bundle_for_maps.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
             ApplicationModified.bundle_for_maps.putParcelable(KEY_LOCATION, lastKnownLocation);
         }
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(getContext(), "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        if (ContextCompat.checkSelfPermission(ApplicationModified.context123,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            PermissionUtils.RationaleDialog.newInstance(PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION, false)
+                    .show(getChildFragmentManager(), "dialog");
+            requestPermissionLauncher.launch(
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+        }
         return false;
     }
 

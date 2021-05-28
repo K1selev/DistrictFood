@@ -1,7 +1,6 @@
 package ru.techpark.districtfood.MainScreen.Filter;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,7 @@ import ru.techpark.districtfood.ApplicationModified;
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.Constants;
 
-public class ApplyFilter {
+public class ApplyFilter{
 
     private List<Restaurant> restaurants;
 
@@ -31,7 +30,6 @@ public class ApplyFilter {
         float number_star = BundleKeyFilter.getFloat(Constants.NUMBER_STAR, 0);
         String text_middle_receipt = BundleKeyFilter.getString(Constants.TEXT_MIDDLE_RECEIPT, "");
         String text_max_location = BundleKeyFilter.getString(Constants.TEXT_LOCATION_MAX, "");
-        Log.d("test", text_max_location);
 
         if (!text_middle_receipt.equals("")) {
             for (Restaurant card : restaurants) {
@@ -97,7 +95,6 @@ public class ApplyFilter {
             for (Restaurant card : restaurants) {
                 float distance = distFrom(card.getX_coordinate(), card.getY_coordinate(),
                         (float) ApplicationModified.myLocation.lat, (float) ApplicationModified.myLocation.lng);
-                Log.d("test", distance + "");
                 if (distance <= Integer.parseInt(text_max_location)) {
                     for (Restaurant card1 : newCards_TWI) {
                         if (card == card1) {
@@ -121,9 +118,8 @@ public class ApplyFilter {
                 Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
                         Math.sin(dLng/2) * Math.sin(dLng/2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        float dist = (float) (earthRadius * c);
 
-        return dist;
+        return (float) (earthRadius * c);
     }
 
     public static ApplyFilter sInstance;

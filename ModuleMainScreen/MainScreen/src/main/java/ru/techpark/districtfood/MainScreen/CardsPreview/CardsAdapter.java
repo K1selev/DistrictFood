@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
-import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 import ru.techpark.districtfood.CallBackListener;
 import ru.techpark.districtfood.Constants;
 import ru.techpark.districtfood.R;
@@ -49,7 +48,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
         holder.mMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callBackListener != null) {
+                if (hasConnection(context) && callBackListener != null) {
                     callBackListener.onCallBack(Constants.ACTION_OPEN_MAP_TAB, restaurantAll);
                 }
             }

@@ -6,11 +6,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
-import android.widget.Toast;
 
 import ru.techpark.districtfood.R;
 
@@ -85,7 +85,7 @@ public abstract class PermissionUtils {
         public void onDismiss(DialogInterface dialog) {
             super.onDismiss(dialog);
             if (finishActivity) {
-                Toast.makeText(getActivity(), R.string.permission_required_toast,
+                Toast.makeText(getActivity(), R.string.permission_rationale_location_from_filter,
                         Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
@@ -136,7 +136,7 @@ public abstract class PermissionUtils {
             finishActivity = arguments.getBoolean(ARGUMENT_FINISH_ACTIVITY);
 
             return new AlertDialog.Builder(getActivity())
-                    .setMessage(R.string.permission_rationale_location)
+                    .setMessage(R.string.permission_rationale_location_from_map)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -157,7 +157,7 @@ public abstract class PermissionUtils {
             super.onDismiss(dialog);
             if (finishActivity) {
                 Toast.makeText(getActivity(),
-                        R.string.permission_required_toast,
+                        R.string.permission_rationale_location_from_filter,
                         Toast.LENGTH_SHORT)
                         .show();
                 getActivity().finish();
