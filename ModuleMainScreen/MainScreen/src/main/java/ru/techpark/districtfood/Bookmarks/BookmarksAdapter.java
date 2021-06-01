@@ -3,7 +3,6 @@ package ru.techpark.districtfood.Bookmarks;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.techpark.districtfood.ApplicationModified;
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
 import ru.techpark.districtfood.CallBackListener;
 import ru.techpark.districtfood.Constants;
-import ru.techpark.districtfood.MainScreen.CardsPreview.Card;
-import ru.techpark.districtfood.MainScreen.CardsPreview.CardsViewModel;
 import ru.techpark.districtfood.R;
 
 public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
 
     private List<Restaurant> mRestaurantForBookmarks = new ArrayList<>();
-    private List<Card> mCards = new ArrayList<>();
-    private CardsViewModel mCardsViewModel;
     private BookmarksViewModel mBookmarksViewModel;
     private CallBackListener callBackListener;
     private RestaurantDao restaurantDao;
@@ -53,18 +49,9 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
         holder.mLikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(hasConnection(context) && mCards.size() != 0) {
-                    Card card = null;
-                    for (Card mCard : mCards) {
-                        if (mCard.getName().equals(restaurantForBookmarks.getName())){
-                            card = mCard;
-                            break;
-                        }
-                    }
-                    mCardsViewModel.likeFromBookmarks(card, mBookmarksViewModel, restaurantDao);
-                }
-                else  Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
-
+                if (hasConnection(context)) {
+                    mBookmarksViewModel.like(restaurantDao, ApplicationModified.cardList, restaurantForBookmarks);
+                } else Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
             }
         });
         holder.click_for_transition.setOnClickListener(new View.OnClickListener() {
@@ -95,21 +82,23 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
 
     //срабатывает обновление recyclerView
     public void setCardsAndRestaurants(List<Restaurant> restaurantForBookmarks,
-                                       List<Card> cards,
-                                       CardsViewModel cardsViewModel,
                                        BookmarksViewModel bookmarksViewModel,
                                        CallBackListener callBackListener,
                                        RestaurantDao restaurantDao,
                                        Context context)
     {
         this.callBackListener = callBackListener;
-        this.mCardsViewModel = cardsViewModel;
         this.mBookmarksViewModel = bookmarksViewModel;
-        this.mCards = cards;
         this.mRestaurantForBookmarks = restaurantForBookmarks;
         this.restaurantDao = restaurantDao;
         this.context = context;
         notifyDataSetChanged();
+    }
+
+    public boolean hasConnection(final Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNW = cm.getActiveNetworkInfo();
+        return activeNW != null && activeNW.isConnected();
     }
 
     public static BookmarksAdapter sInstance;
@@ -120,15 +109,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksViewHolder>{
             sInstance = new BookmarksAdapter();
         }
         return sInstance;
-    }
-
-    public boolean hasConnection(final Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNW = cm.getActiveNetworkInfo();
-        if (activeNW != null && activeNW.isConnected()) {
-            return true;
-        }
-        return false;
     }
 
 }

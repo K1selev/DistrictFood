@@ -62,12 +62,22 @@
                     android:layout_height="wrap_content"
                     tools:text="Краткое описание"
                     android:textSize="20sp"/>
-                <TextView
-                    android:id="@+id/middle_receipt_tab"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    tools:text="Средний чек"/>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="@string/Middle_Receipt_Text"/>
+                    <TextView
+                        android:id="@+id/middle_receipt_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        tools:text="400"/>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,6 +130,89 @@
             android:paddingBottom="5dp"
             android:inputType="textAutoCorrect"
             android:imeOptions="actionDone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rate_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/lines_around"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/score_fragment_tab"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/black"
+            android:textSize="@dimen/scale_text_filter"
+            android:padding="5dp"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/icon_star_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_score_clear"/>
+            <ImageView
+                android:id="@+id/icon_star_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_score_clear"/>
+            <ImageView
+                android:id="@+id/icon_star_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_score_clear"/>
+            <ImageView
+                android:id="@+id/icon_star_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_score_clear"/>
+            <ImageView
+                android:id="@+id/icon_star_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_score_clear"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/cancel"
+                android:layout_weight="1"
+                android:background="@color/RED"
+                android:layout_margin="3dp"
+                />
+            <Button
+                android:id="@+id/ok"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/ok"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:layout_margin="3dp"
+                />
+
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

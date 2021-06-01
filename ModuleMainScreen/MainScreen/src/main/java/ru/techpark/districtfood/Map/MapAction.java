@@ -5,6 +5,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
@@ -24,16 +25,16 @@ import ru.techpark.districtfood.R;
 public class MapAction {
 
     private GoogleMap googleMap;
-    //private List<LatLng> places = new ArrayList<>();
+    private Polyline polyline;
 
-    public void Router(String ACTION, int id, GoogleMap map, LatLng myLocation) {
+    public void Router(String ACTION, Restaurant restaurant, GoogleMap map, LatLng myLocation) {
         googleMap = map;
         switch (ACTION) {
             case Constants.ACTION_RESTAURANT_AROUND:
                 RestaurantAround();
                 break;
             case Constants.ACTION_ROUTE_OF_RESTAURANT:
-                RouteOfRestaurant(id, myLocation);
+                RouteOfRestaurant(restaurant, myLocation);
                 break;
         }
     }
@@ -53,23 +54,15 @@ public class MapAction {
 
     }
 
-    public void RouteOfRestaurant(int id, LatLng myLocation) {
+    public void RouteOfRestaurant(Restaurant restaurant, LatLng myLocation) {
 
-        LatLng place = null;
+        ApplicationModified.restaurantForUpdateRoute = restaurant;
+        ApplicationModified.updateRoute =true;
 
-        if (ApplicationModified.restaurantList != null) {
-            for (Restaurant restaurant: ApplicationModified.restaurantList) {
-
-                if (restaurant.getId() == id) {
-                    place = new LatLng(restaurant.getX_coordinate(), restaurant.getY_coordinate());
-                    googleMap.addMarker(new MarkerOptions()
-                            .position(new com.google.android.gms.maps.model.LatLng(place.lat, place.lng))
-                            .title(restaurant.getName())).setTitle(restaurant.getName());
-                }
-
-            }
-        }
-
+        LatLng place = new LatLng(restaurant.getX_coordinate(), restaurant.getY_coordinate());
+        googleMap.addMarker(new MarkerOptions()
+                .position(new com.google.android.gms.maps.model.LatLng(place.lat, place.lng))
+                .title(restaurant.getName())).setTitle(restaurant.getName());
 
         GeoApiContext geoApiContext = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBUzzbsW2Zxqfy-QeB-l8I2MCKsAh08RVQ")
@@ -91,6 +84,7 @@ public class MapAction {
         List<com.google.maps.model.LatLng> path = result.routes[0].overviewPolyline.decodePath();
         PolylineOptions line = new PolylineOptions();
 
+
         LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
 
         for (int i = 0; i < path.size(); i++) {
@@ -100,14 +94,22 @@ public class MapAction {
 
         line.width(16f).color(R.color.colorPrimary);
 
-        googleMap.addPolyline(line);
+        this.polyline = googleMap.addPolyline(line);
 
 //Выставляем камеру на нужную нам позицию
-        LatLngBounds latLngBounds = latLngBuilder.build();
-        int width = ApplicationModified.context123.getResources().getDisplayMetrics().widthPixels;
-        CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, width, width, 25);//width это размер нашего экрана
-        googleMap.moveCamera(track);
+        if (ApplicationModified.updateCameraPositionForRoute) {
+            ApplicationModified.updateCameraPositionForRoute = false;
+            LatLngBounds latLngBounds = latLngBuilder.build();
+            int width = ApplicationModified.contextApplication.getResources().getDisplayMetrics().widthPixels;
+            CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, width, width, 25);//width это размер нашего экрана
+            googleMap.moveCamera(track);
+        }
 
+    }
+
+    public Polyline polyline(){
+
+        return this.polyline;
 
     }
 

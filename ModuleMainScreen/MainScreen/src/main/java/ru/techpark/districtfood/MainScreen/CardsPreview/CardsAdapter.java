@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.techpark.districtfood.ApplicationModified;
 import ru.techpark.districtfood.CachingByRoom.Restaurant;
 import ru.techpark.districtfood.CallBackListener;
 import ru.techpark.districtfood.Constants;
@@ -21,8 +22,6 @@ import ru.techpark.districtfood.R;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
 
-    private List<Card> mCards = new ArrayList<>();
-    private CardsViewModel mCardsViewModel;
     private CallBackListener callBackListener;
     private Context context;
     private List<Restaurant> mRestaurantAll = new ArrayList<>();
@@ -50,42 +49,28 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
             public void onClick(View v) {
                 if (hasConnection(context) && callBackListener != null) {
                     callBackListener.onCallBack(Constants.ACTION_OPEN_MAP_TAB, restaurantAll);
-                }
+                } else Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
             }
         });
         holder.mLikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(hasConnection(context) && mCards.size() != 0) {
-
-                    Card card = null;
-                    for (Card mCard : mCards) {
-                        if (mCard.getName().equals(restaurantAll.getName())){
-                            card = mCard;
-                            break;
-                        }
-                    }
-
-
-                    mCardsViewModel.like(card);
-                }
-                else  Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
+                if (hasConnection(context)) {
+                    ApplicationModified.restaurantAllViewModel.like(ApplicationModified.restaurantDao,
+                            ApplicationModified.cardList, restaurantAll);
+                } else Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
             }
         });
         holder.click_for_transition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callBackListener != null) {
-                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll);
-                }
+                callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll);
             }
         });
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (callBackListener != null) {
-                    callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll);
-                }
+                callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll);
             }
         });
         holder.bind();
@@ -99,32 +84,18 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
 
 
     //срабатывает обновление recyclerView
-    public void setCards(List<Card> cards,
-                         CardsViewModel mCardsViewModel,
-                         CallBackListener callBackListener,
-                         Context context,
-                         List<Restaurant> restaurantAll) {
-        this.callBackListener = callBackListener;
-        this.mCardsViewModel = mCardsViewModel;
-        this.mCards = cards;
-        this.context = context;
-
-        this.mRestaurantAll = restaurantAll;
-
-        notifyDataSetChanged();
-    }
-    public void setCards(List<Restaurant> restaurants, CardsViewModel mCardsViewModel) {
-        this.mCardsViewModel = mCardsViewModel;
-        this.mRestaurantAll = restaurants;
-        notifyDataSetChanged();
-    }
     public void setCards(CallBackListener callBackListener,
                          Context context,
                          List<Restaurant> restaurantAll) {
         this.callBackListener = callBackListener;
         this.context = context;
+
         this.mRestaurantAll = restaurantAll;
 
+        notifyDataSetChanged();
+    }
+    public void setCards(List<Restaurant> restaurants) {
+        this.mRestaurantAll = restaurants;
         notifyDataSetChanged();
     }
 

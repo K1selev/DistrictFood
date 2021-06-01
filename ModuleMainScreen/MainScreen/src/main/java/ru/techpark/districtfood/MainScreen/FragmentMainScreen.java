@@ -121,8 +121,7 @@ public class FragmentMainScreen extends Fragment{
 
                 //в Search передается строка из поиска и в CardsAdapter посылается обновление
                 CardsAdapter.getInstance().setCards(
-                        Search.getInstance().search(v.getText().toString()),
-                        FragmentCards.getInstance().GetCardsViewModel()
+                        Search.getInstance().search(v.getText().toString())
                 );
 
                 Search.getInstance().SetRestaurants(ApplicationModified.restaurantList);

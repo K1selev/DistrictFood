@@ -3,115 +3,129 @@
   [
     {
       "id": 0,
-      "like": false,
       "middle_receipt": 300,
       "name": "MacDonald's",
-      "score": "4.3",
+      "score": 0.0,
       "tag_with_itself": true,
       "tag_fast_food": true,
       "tag_sale": false,
       "url_image": "https://i.pinimg.com/originals/19/5a/de/195ade04424293f36fb4187557e62d2f.jpg",
       "z_description": "Хорошее заведение с недорогими ценами",
       "x_coordinate": 55.77175006573671,
-      "y_coordinate": 37.68184642459872
+      "y_coordinate": 37.68184642459872,
+      "z_feedbacks": ""
      },
      {
        "id": 1,
-       "like": false,
        "middle_receipt": 250,
        "name": "KFC",
-       "score": "4.5",
+       "score": 0.0,
        "tag_with_itself": true,
        "tag_fast_food": true,
        "tag_sale": false,
        "url_image": "https://bestfoodlogistics.com/wp-content/uploads/2018/06/KFC-Logo_edited-1.jpg",
        "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
        "x_coordinate": 55.773025342016695,
-       "y_coordinate": 37.67690543637803
+       "y_coordinate": 37.67690543637803,
+       "z_feedbacks": ""
      },
      {
        "id": 2,
-       "like": false,
        "middle_receipt": 350,
        "name": "Бар Бистрофф",
-       "score": "4.8",
+       "score": 0.0,
        "tag_with_itself": true,
        "tag_fast_food": false,
        "tag_sale": true,
        "url_image": "https://s1.1zoom.ru/big0/971/376930-sepik.jpg",
        "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
        "x_coordinate": 55.770187282310964,
-       "y_coordinate": 37.68610997604037
+       "y_coordinate": 37.68610997604037,
+       "z_feedbacks": ""
      },
     {
       "id": 3,
-      "like": false,
       "middle_receipt": 350,
       "name": "GreenDin",
-      "score": "1.5",
+      "score": 0.0,
       "tag_with_itself": true,
       "tag_fast_food": false,
       "tag_sale": false,
       "url_image": "https://i.artfile.ru/5616x3744_640101_[www.ArtFile.ru].jpg",
       "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
       "x_coordinate": 55.76970168043541,
-      "y_coordinate": 37.686349652087955
+      "y_coordinate": 37.686349652087955,
+      "z_feedbacks": ""
     },
     {
       "id": 4,
-      "like": false,
       "middle_receipt": 350,
       "name": "PhoU",
-      "score": "3.1",
+      "score": 0.0,
       "tag_with_itself": true,
       "tag_fast_food": true,
       "tag_sale": true,
       "url_image": "https://www.ejin.ru/wp-content/uploads/2017/09/8-1176.jpg",
       "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
       "x_coordinate": 55.77159796084261,
-      "y_coordinate": 37.682420429128676
+      "y_coordinate": 37.682420429128676,
+      "z_feedbacks": ""
     },
     {
       "id": 5,
-      "like": false,
       "middle_receipt": 350,
       "name": "Теремок",
-      "score": "2.8",
+      "score": 0.0,
       "tag_with_itself": true,
       "tag_fast_food": false,
       "tag_sale": false,
       "url_image": "https://w-dog.ru/wallpapers/5/3/514766626933323/myaso-kolbasy-ovoshhi-zelen-kapusta-pomidory-limon-shashlyk-shpazhki-palochki-sosiski-podzharennye-pomidor-ogurec.jpg",
       "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
       "x_coordinate": 55.77165836890148,
-      "y_coordinate": 37.68215304118523
+      "y_coordinate": 37.68215304118523,
+      "z_feedbacks": ""
     },
     {
       "id": 6,
-      "like": false,
       "middle_receipt": 450,
       "name": "Burger King",
-      "score": "5.0",
+      "score": 0.0,
       "tag_with_itself": true,
       "tag_fast_food": true,
       "tag_sale": false,
       "url_image": "https://avatars.mds.yandex.net/get-zen_doc/1856484/pub_5d8b65445d636200af94b0ab_5d8b659becfb8000b00eb309/scale_1200",
       "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
       "x_coordinate": 55.772699404865534,
-      "y_coordinate": 37.67658482459562
+      "y_coordinate": 37.67658482459562,
+      "z_feedbacks": ""
     },
     {
       "id": 7,
-      "like": false,
       "middle_receipt": 400,
       "name": "Му-Му",
-      "score": "4.7",
+      "score": 0.0,
       "tag_with_itself": true,
       "tag_fast_food": false,
       "tag_sale": false,
       "url_image": "https://avatars.mds.yandex.net/get-zen_doc/195350/pub_5b2e352cc2fba000aa1deaa5_5b2e37f16628cb00a819a90c/scale_1200",
       "z_description": "Хорошее заведение с недорогими ценами, вкусная еда",
       "x_coordinate": 55.77146689049164,
-      "y_coordinate": 37.67901948019465
+      "y_coordinate": 37.67901948019465,
+      "z_feedbacks": ""
+    },
+    {
+      "id": 8,
+      "middle_receipt": 300,
+      "name": "Мексиканская еда",
+      "score": 0.0,
+      "tag_with_itself": true,
+      "tag_fast_food": true,
+      "tag_sale": false,
+      "url_image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmeksika.info%2Fstrana%2Fblyuda-i-kuhnya-meksiki%2F&psig=AOvVaw0l_onBcyIgBOhqMB6vEF7W&ust=1622334127560000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPi3iuDP7fACFQAAAAAdAAAAABAD",
+      "z_description": "Подходи налетай, все свое, все домашнее, вчера с дачи привез",
+      "x_coordinate": 55.771519,
+      "y_coordinate": 37.682058,
+      "z_feedbacks": ""
     }
-   ]
+  ]
  }

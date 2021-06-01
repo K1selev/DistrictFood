@@ -20,7 +20,10 @@ public interface RestaurantDao {
     LiveData<List<Restaurant>> getRestaurant();
 
     @Query("select * from Restaurant")
-    List<Restaurant> getRestaurantAll();
+    LiveData<List<Restaurant>> getRestaurantAll();
+
+    @Query("select * from Restaurant")
+    List<Restaurant> getRestaurantAllWithoutLiveData();
 
     @Query("select * from Restaurant")
     Cursor getRestaurantsCursor();

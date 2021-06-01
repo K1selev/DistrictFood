@@ -11,6 +11,7 @@ public class Constants {
     public static final String SCORE = "score";
     public static final String URL = "url";
     public static final String ID = "id";
+    public static final String FEEDBACKS = "feedbacks";
     public static final String ACTION_OPEN_MAP_TAB = "action_open_map_tab";
     public static final String ACTION_RESTAURANT_AROUND = "action_restaurant_around";
     public static final String ACTION_ROUTE_OF_RESTAURANT = "action_route_of_restaurant";

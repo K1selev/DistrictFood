@@ -42,7 +42,6 @@ public class FragmentBookmarks extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setRetainInstance(true);
 
         if (recyclerView == null) {
             recyclerView = getActivity().findViewById(R.id.bookmarks_feed);
@@ -68,8 +67,6 @@ public class FragmentBookmarks extends Fragment implements LoaderManager.LoaderC
 
                 BookmarksAdapter.getInstance().setCardsAndRestaurants(
                         restaurants,
-                        FragmentCards.getInstance().getCardList(),
-                        FragmentCards.getInstance().GetCardsViewModel(),
                         bookmarksViewModel,
                         callBackListener,
                         FragmentCards.getInstance().getRestaurantDao(),

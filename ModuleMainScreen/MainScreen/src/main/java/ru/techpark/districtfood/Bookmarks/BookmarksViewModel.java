@@ -25,8 +25,12 @@ public class BookmarksViewModel extends AndroidViewModel {
         return mRestaurants;
     }
 
-    public void like(RestaurantDao restaurantDao, List<Card> cards) {
-        mRepo.like(restaurantDao, cards);
+    public void like(RestaurantDao restaurantDao, List<Card> cards, Restaurant restaurant) {
+        mRepo.like(restaurantDao, cards, restaurant);
+    }
+
+    public void feedbacks(RestaurantDao restaurantDao, List<Card> cards, Restaurant restaurant, String feedback){
+        mRepo.feedbacks(restaurantDao, cards, restaurant, feedback);
     }
 
 }

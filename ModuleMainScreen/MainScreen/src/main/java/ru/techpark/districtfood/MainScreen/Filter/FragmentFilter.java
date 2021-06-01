@@ -38,7 +38,6 @@ import com.google.android.material.snackbar.Snackbar;
 import ru.techpark.districtfood.ApplicationModified;
 import ru.techpark.districtfood.Constants;
 import ru.techpark.districtfood.MainScreen.CardsPreview.CardsAdapter;
-import ru.techpark.districtfood.MainScreen.CardsPreview.FragmentCards;
 import ru.techpark.districtfood.MainScreen.Search.Search;
 import ru.techpark.districtfood.R;
 
@@ -134,16 +133,14 @@ public class FragmentFilter extends Fragment{
 
                 //в Apply передается состояние фильтра и в CardsAdapter посылается обновление
                 CardsAdapter.getInstance().setCards(
-                        ApplyFilter.getInstance().apply(ApplicationModified.bundleFilter),
-                        FragmentCards.getInstance().GetCardsViewModel()
+                        ApplyFilter.getInstance().apply(ApplicationModified.bundleFilter)
                 );
 
                 ApplyFilter.getInstance().SetRestaurants(ApplicationModified.restaurantList);
             } else {
                 //в Apply передается состояние фильтра и в CardsAdapter посылается обновление
                 CardsAdapter.getInstance().setCards(
-                        ApplyFilter.getInstance().apply(ApplicationModified.bundleFilter),
-                        FragmentCards.getInstance().GetCardsViewModel()
+                        ApplyFilter.getInstance().apply(ApplicationModified.bundleFilter)
                 );
             }
 
@@ -342,7 +339,7 @@ public class FragmentFilter extends Fragment{
     }
 
     private void getLocationPermission() {
-        if (ContextCompat.checkSelfPermission(ApplicationModified.context123,
+        if (ContextCompat.checkSelfPermission(ApplicationModified.contextApplication,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true;
@@ -380,7 +377,7 @@ public class FragmentFilter extends Fragment{
 
     private void getDeviceLocation() {
 
-        Places.initialize(ApplicationModified.context123, "${MAPS_API_KEY}");
+        Places.initialize(ApplicationModified.contextApplication, "${MAPS_API_KEY}");
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
         try {

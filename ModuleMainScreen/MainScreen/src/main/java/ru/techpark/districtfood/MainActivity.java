@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements CallBackListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ApplicationModified.context123 = this.getApplicationContext();
+        ApplicationModified.contextApplication = this.getApplicationContext();
 
         navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements CallBackListener{
 
                 Bundle bundle = new Bundle();
 
+                bundle.putString(Constants.FEEDBACKS, restaurant.getFeedbacks());
                 navController.navigate(R.id.action_navigation_card_to_fragmentFeedbacks_for_cards, bundle);
                 break;
             }
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements CallBackListener{
 
                 Bundle bundle = new Bundle();
 
+                bundle.putString(Constants.FEEDBACKS, restaurant.getFeedbacks());
                 navController.navigate(R.id.action_navigation_card_from_bookmarks_to_fragmentFeedbacks_for_bookmarks, bundle);
                 break;
             }

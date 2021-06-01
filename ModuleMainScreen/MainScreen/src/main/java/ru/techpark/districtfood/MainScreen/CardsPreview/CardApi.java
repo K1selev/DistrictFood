@@ -1,7 +1,5 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
-import android.util.Log;
-
 import java.util.List;
 
 import retrofit2.Call;
@@ -14,7 +12,6 @@ public interface CardApi {
 
     class CardPlain {
         public int id;
-        public boolean like;
         public int middle_receipt;
         public String name;
         public float score;
@@ -25,21 +22,31 @@ public interface CardApi {
         public float x_coordinate;
         public float y_coordinate;
         public String z_description;
+        public String z_feedbacks;
     }
 
     @GET("/Restaurant.json")
     Call<List<CardPlain>> getAll();
 
-    //сообщает о нажатии на лайк
-    class Like {
-        public boolean like;
+    class Feedbacks {
+        public String z_feedbacks;
 
-        public Like(boolean like) {
-            this.like = like;
+        public Feedbacks(String z_feedbacks) {
+            this.z_feedbacks = z_feedbacks;
+        }
+    }
+
+    class Score {
+        public float score;
+
+        public Score(float score) {
+            this.score = score;
         }
     }
 
     @PATCH("/Restaurant/{id}.json")
-    Call<Like> like(@Path("id") int id, @Body Like like);
+    Call<Feedbacks> z_feedbacks(@Path("id") int id, @Body Feedbacks z_feedbacks);
 
+    @PATCH("/Restaurant/{id}.json")
+    Call<Score> score(@Path("id") int id, @Body Score score);
 }

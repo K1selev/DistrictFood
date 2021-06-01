@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout">
 
     <fragment
@@ -15,5 +16,72 @@
         tools:context="ru.techpark.districtfood.Map.FragmentMap"
         map:uiCompass="true"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/distanceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:weightSum="100"
+        android:visibility="gone"
+        android:background="@drawable/lines_around">
+
+        <TextView
+            android:id="@+id/distanceRouteRealTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="До конца маршрута: 200 м"
+            android:textSize="23sp"
+            android:textColor="@color/black"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="15dp"
+            android:layout_weight="90"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageButton
+            android:id="@+id/stop_route"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/fui_transparent"
+            android:padding="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/clear_text"
+            android:layout_weight="10"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/bottomsheet"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:background="@drawable/lines_around"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/go_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Проложить маршрут к \'KFC\'"
+            android:textSize="18sp"
+            android:background="@color/grey"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Расстояние: 200 м"
+            android:textSize="23sp"
+            android:textColor="@color/black"
+            android:paddingStart="15dp"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

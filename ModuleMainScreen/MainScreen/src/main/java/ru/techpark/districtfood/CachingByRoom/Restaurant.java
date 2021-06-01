@@ -1,10 +1,6 @@
 package ru.techpark.districtfood.CachingByRoom;
 
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-
 import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -48,12 +44,15 @@ public class Restaurant {
     @ColumnInfo(name = "z_description")
     private String mZ_description;
 
+    @ColumnInfo(name = "z_feedbacks")
+    private String mFeedbacks;
+
     public Restaurant() {
     }
 
     public Restaurant(int mId, boolean mIsLike, int mMiddleReceipt, String mName, float mScore,
                       boolean mTagFastFood, boolean mTagSale, boolean mTagWithItself, String url_image,
-                      float x_coordinate, float y_coordinate, String z_description) {
+                      float x_coordinate, float y_coordinate, String z_description, String z_feedbacks) {
         this.mId = mId;
         this.mIsLike = mIsLike;
         this.mMiddleReceipt = mMiddleReceipt;
@@ -66,6 +65,7 @@ public class Restaurant {
         this.mX_coordinate = x_coordinate;
         this.mY_coordinate = y_coordinate;
         this.mZ_description = z_description;
+        this.mFeedbacks = z_feedbacks;
 
     }
 
@@ -163,5 +163,13 @@ public class Restaurant {
 
     public void setX_coordinate(float mX_coordinate) {
         this.mX_coordinate = mX_coordinate;
+    }
+
+    public String getFeedbacks() {
+        return mFeedbacks;
+    }
+
+    public void setFeedbacks(String mFeedbacks) {
+        this.mFeedbacks = mFeedbacks;
     }
 }

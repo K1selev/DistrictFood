@@ -33,10 +33,20 @@
     <string name="feedback">To leave a feedback</string>
     <string name="feedbacks">Feedbacks</string>
 
-    <string name="welcome">добро пожаловать</string>
+    <string name="welcome">Welcome</string>
     <string name="google_sign_in">sign in with google</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="sign_in">Sign In</string>
-    <string name="changePassword">изменить пароль</string>
+    <string name="changePassword">Change password</string>
+
+    <string name="score_fragment_tab">Rate a restaurant</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="Middle_Receipt_Text">Middle receipt:  </string>
+    <string name="no_feedbacks">There are no reviews here yet</string>
+    <string name="go_route">Get directions to </string>
+    <string name="distance">Distance: </string>
+    <string name="distanceRouteRealTime">To the end of the route:</string>
+
 </resources>

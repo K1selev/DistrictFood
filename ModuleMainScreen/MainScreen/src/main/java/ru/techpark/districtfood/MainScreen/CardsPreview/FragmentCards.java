@@ -37,9 +37,7 @@ import ru.techpark.districtfood.R;
 public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
 
     private RecyclerView recyclerView;
-    //private CardsViewModel cardsViewModel;
     private CallBackListener callBackListener;
-    //private List<Card> cardList;
     private RestaurantDao restaurantDao;
     private Parcelable listState;
     private ProgressBar mProgressBar;
@@ -84,6 +82,7 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
 
         restaurantDao = ApplicationModified.from(context).
                 getRestaurantDatabase().getRestaurantDao();
+        ApplicationModified.restaurantDao = restaurantDao;
 
         ApplicationModified.cardsViewModel = new ViewModelProvider(this.activity)
                 .get(CardsViewModel.class);
@@ -91,6 +90,25 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
         ApplicationModified.cardsViewModel
                 .getCards()
                 .observe(this.lifecycleOwner, observer);
+
+
+        Observer<List<Restaurant>> observerRestaurant = new Observer<List<Restaurant>>() {
+            @Override
+            public void onChanged(List<Restaurant> restaurants) {
+
+                if (ApplicationModified.restaurantList != null) {
+                    CardsAdapter.getInstance().setCards(callBackListener, context,
+                            CheckOnHaveFiltersAndSearch());
+                }
+
+            }
+        };
+
+        ApplicationModified.restaurantAllViewModel = new ViewModelProvider(this.activity)
+                .get(RestaurantAllViewModel.class);
+        ApplicationModified.restaurantAllViewModel
+                .getRestaurantsAll()
+                .observe(this.lifecycleOwner, observerRestaurant);
 
         if (ApplicationModified.bundleForSaveStateRecyclerView != null) {
             listState = ApplicationModified.bundleForSaveStateRecyclerView
@@ -126,9 +144,10 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
                         Thread ThreadForGetRoomDatabase = new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                restaurantDao.deleteAll();
-                                restaurantDao.insertRestaurants(completionRestaurant(cards));
-                                ApplicationModified.restaurantList = restaurantDao.getRestaurantAll();
+                                List<Boolean> LikeAll = GetLikeAll(ApplicationModified.restaurantDao);
+                                ApplicationModified.restaurantDao.deleteAll();
+                                ApplicationModified.restaurantDao.insertRestaurants(completionRestaurant(cards, LikeAll));
+                                ApplicationModified.restaurantList = ApplicationModified.restaurantDao.getRestaurantAllWithoutLiveData();
                             }
                         });
                         ThreadForGetRoomDatabase.start();
@@ -141,8 +160,7 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
 
                         hideProgress();
 
-                        CardsAdapter.getInstance().setCards(cards, ApplicationModified.cardsViewModel,
-                                callBackListener, context,
+                        CardsAdapter.getInstance().setCards(callBackListener, context,
                                 CheckOnHaveFiltersAndSearch());
                     }
 
@@ -150,7 +168,7 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
                     Thread ThreadForGetRoomDatabase = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            ApplicationModified.restaurantList = restaurantDao.getRestaurantAll();
+                            ApplicationModified.restaurantList = ApplicationModified.restaurantDao.getRestaurantAllWithoutLiveData();
                         }
                     });
                     ThreadForGetRoomDatabase.start();
@@ -197,22 +215,48 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
         }
     }
 
-    private List<Restaurant> completionRestaurant(List<Card> cardsRoom) {
+    private List<Restaurant> completionRestaurant(List<Card> cardsRoom, List<Boolean> LikeAll) {
 
         List<Restaurant> restaurantAll = new ArrayList<>();
 
-        for (int i = 0; i < cardsRoom.size(); i++){
-            final Card cardRoom = cardsRoom.get(i);
+        if (LikeAll.size() != 0) {
+            for (int i = 0; i < cardsRoom.size(); i++) {
+                final Card cardRoom = cardsRoom.get(i);
 
-            restaurantAll.add(new Restaurant(cardRoom.getId(),
-                    cardRoom.getIsLike(), cardRoom.getMiddle_receipt(),
-                    cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
-                    cardRoom.getTagSale(), cardRoom.getTagWithItself(),
-                    cardRoom.getUrlImage(), cardRoom.getX_coordinate(),
-                    cardRoom.getY_coordinate(), cardRoom.getZ_description()));
+                boolean like = LikeAll.get(i);
+
+                restaurantAll.add(new Restaurant(cardRoom.getId(),
+                        like, cardRoom.getMiddle_receipt(),
+                        cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
+                        cardRoom.getTagSale(), cardRoom.getTagWithItself(),
+                        cardRoom.getUrlImage(), cardRoom.getX_coordinate(),
+                        cardRoom.getY_coordinate(), cardRoom.getZ_description(), cardRoom.getFeedbacks()));
+            }
+        }
+
+        else {
+            for (int i = 0; i < cardsRoom.size(); i++) {
+                final Card cardRoom = cardsRoom.get(i);
+
+                restaurantAll.add(new Restaurant(cardRoom.getId(),
+                        false, cardRoom.getMiddle_receipt(),
+                        cardRoom.getName(), cardRoom.getScore(), cardRoom.getTagFastFood(),
+                        cardRoom.getTagSale(), cardRoom.getTagWithItself(),
+                        cardRoom.getUrlImage(), cardRoom.getX_coordinate(),
+                        cardRoom.getY_coordinate(), cardRoom.getZ_description(), cardRoom.getFeedbacks()));
+            }
         }
 
         return restaurantAll;
+    }
+
+    private List<Boolean> GetLikeAll (RestaurantDao restaurantDao) {
+
+        List<Boolean> LikeAll = new ArrayList<>(restaurantDao.getRestaurantAllWithoutLiveData().size());
+        for (Restaurant restaurant : restaurantDao.getRestaurantAllWithoutLiveData()) {
+            LikeAll.add(restaurant.isLike());
+        }
+        return LikeAll;
     }
 
     public void scrollToTop() {
@@ -293,7 +337,7 @@ public class FragmentCards implements SwipeRefreshLayout.OnRefreshListener{
         return ApplicationModified.cardList;
     }
     public RestaurantDao getRestaurantDao() {
-        return restaurantDao;
+        return ApplicationModified.restaurantDao;
     }
 
 

@@ -1,7 +1,6 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,14 +8,10 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import ru.techpark.districtfood.Bookmarks.BookmarksViewModel;
-import ru.techpark.districtfood.CachingByRoom.RestaurantDao;
-
 public class CardsViewModel extends AndroidViewModel {
 
     private CardRepo mRepo = new CardRepo(getApplication());
     private LiveData<List<Card>> mCards = mRepo.getCards();
-
 
     public CardsViewModel(@NonNull Application application) {
         super(application);
@@ -26,13 +21,12 @@ public class CardsViewModel extends AndroidViewModel {
         return mCards;
     }
 
-    public void like(Card card) {
-        mRepo.like(card);
+    public void feedbacks(Card card, String feedback) {
+        mRepo.feedbacks(card, feedback);
     }
 
-    public void likeFromBookmarks(Card card, BookmarksViewModel bookmarksViewModel,
-                                  RestaurantDao restaurantDao) {
-        mRepo.likeFromBookmarks(card, bookmarksViewModel, restaurantDao);
+    public void scores(Card card, String feedback) {
+        mRepo.score(card, feedback);
     }
 
     public void refresh() {

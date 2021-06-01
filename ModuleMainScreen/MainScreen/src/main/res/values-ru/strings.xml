@@ -40,4 +40,13 @@
     <string name="hint_password">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="changePassword">изменить пароль</string>
+
+    <string name="score_fragment_tab">Оценить ресторан</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">Ок</string>
+    <string name="Middle_Receipt_Text">Средний чек:   </string>
+    <string name="no_feedbacks">Здесь пока нет отзывов</string>
+    <string name="go_route">Проложить маршрут к </string>
+    <string name="distance">Расстояние: </string>
+    <string name="distanceRouteRealTime">До конца маршрута:</string>
 </resources>
