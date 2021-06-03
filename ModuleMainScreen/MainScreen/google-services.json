@@ -10,7 +10,8 @@
       "client_info": {
         "mobilesdk_app_id": "1:386669575062:android:761b01977afc4fac563bb7",
         "android_client_info": {
-          "package_name": "ru.techpark.districtfood"
+          "package_name": "ru.techpark.districtfood",
+          "certificate_hash": "ca23d3941a7e76f13f0bc93b8a24c4ce5f15e2ee"
         }
       },
       "oauth_client": [
