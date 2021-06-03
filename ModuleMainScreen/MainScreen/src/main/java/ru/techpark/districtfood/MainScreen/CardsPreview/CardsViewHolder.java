@@ -1,8 +1,7 @@
 package ru.techpark.districtfood.MainScreen.CardsPreview;
 
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import ru.techpark.districtfood.R;
 
 public class CardsViewHolder extends RecyclerView.ViewHolder {
     protected ImageView img;
-    protected ImageView click_for_transition;
+    //protected ImageView click_for_transition;
     protected boolean mIsLike;
     protected ImageView mLikeBtn;
     protected ImageButton mMapBtn;
@@ -25,18 +24,20 @@ public class CardsViewHolder extends RecyclerView.ViewHolder {
     protected TextView mScore;
     protected TextView mName;
     protected String url_image;
+    protected Button open_full_text;
 
     public CardsViewHolder(@NonNull View itemView) {
         super(itemView);
 
         img = itemView.findViewById(R.id.photo_restaurant);
-        click_for_transition = itemView.findViewById(R.id.click_for_transition);
+        //click_for_transition = itemView.findViewById(R.id.click_for_transition);
         mName = itemView.findViewById(R.id.named_restaurant);
         mLikeBtn = itemView.findViewById(R.id.like);
         mMiddleReceipt = itemView.findViewById(R.id.middle_receipt);
         mDescription = itemView.findViewById(R.id.description);
         mScore = itemView.findViewById(R.id.score_preview);
         mMapBtn = itemView.findViewById(R.id.route);
+        open_full_text = itemView.findViewById(R.id.open_full_text);
 
     }
 

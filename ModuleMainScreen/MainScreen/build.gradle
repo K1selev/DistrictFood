@@ -30,8 +30,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+}
 
-
+repositories {
+    mavenCentral()
 }
 
 apply plugin: 'com.android.application'

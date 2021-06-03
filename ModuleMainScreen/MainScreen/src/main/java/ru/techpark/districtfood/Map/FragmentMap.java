@@ -394,9 +394,9 @@ public class FragmentMap extends Fragment implements
                 float[] result1 = new float[3];
                 Location.distanceBetween(ApplicationModified.myLocation.lat,
                         ApplicationModified.myLocation.lng, latLng.latitude, latLng.longitude, result1);
-                ApplicationModified.myLocation = locationMy;
 
                 if(result1[0] > 20) {
+                    ApplicationModified.myLocation = locationMy;
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM));
                 }
 
@@ -425,7 +425,7 @@ public class FragmentMap extends Fragment implements
                     float[] result = new float[3];
                     Location.distanceBetween(ApplicationModified.marker.getPosition().latitude,
                             ApplicationModified.marker.getPosition().longitude,
-                            ApplicationModified.myLocation.lat, ApplicationModified.myLocation.lng, result);
+                            latLng.latitude, latLng.longitude, result);
 
                     String distance = getResources().getString(R.string.distanceRouteRealTime)
                             + " " + Math.ceil(result[0]) + " " +
@@ -447,6 +447,7 @@ public class FragmentMap extends Fragment implements
             MapAction.getInstance().polyline().remove();
             ApplicationModified.updateRoute = false;
             LayoutDistance.setVisibility(View.GONE);
+            MapAction.getInstance().Router(Constants.ACTION_RESTAURANT_AROUND, null, map, null);
         }
     };
 

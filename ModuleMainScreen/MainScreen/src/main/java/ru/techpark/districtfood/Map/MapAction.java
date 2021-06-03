@@ -4,6 +4,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -60,9 +61,15 @@ public class MapAction {
         ApplicationModified.updateRoute =true;
 
         LatLng place = new LatLng(restaurant.getX_coordinate(), restaurant.getY_coordinate());
-        googleMap.addMarker(new MarkerOptions()
+
+        MarkerOptions markerOptions = new MarkerOptions()
                 .position(new com.google.android.gms.maps.model.LatLng(place.lat, place.lng))
-                .title(restaurant.getName())).setTitle(restaurant.getName());
+                .title(restaurant.getName());
+
+        Marker marker = googleMap.addMarker(markerOptions);
+        marker.setTitle(restaurant.getName());
+
+        ApplicationModified.marker = marker;
 
         GeoApiContext geoApiContext = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBUzzbsW2Zxqfy-QeB-l8I2MCKsAh08RVQ")

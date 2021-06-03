@@ -3,6 +3,7 @@ package ru.techpark.districtfood.MainScreen.CardsPreview;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,34 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
         holder.mScore.setText(String.valueOf(restaurantAll.getScore()));
         holder.IsLike(restaurantAll.isLike());
 
+        /*int line_of_text  = holder.mDescription.getLineCount();
+
+
+        if (line_of_text > 3){
+            holder.mDescription.setMaxLines(3);
+            holder.open_full_text.setVisibility(View.VISIBLE);
+        }*/
+
+        holder.open_full_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.mDescription.setMaxLines(100);
+                holder.open_full_text.setVisibility(View.GONE);
+            }
+        });
+
+        holder.mDescription.post(new Runnable() {
+            @Override
+            public void run() {
+                int line_of_text  = holder.mDescription.getLineCount();
+                Log.d("test", line_of_text + "");
+                if (line_of_text > 3){
+                    holder.mDescription.setMaxLines(3);
+                    holder.open_full_text.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         holder.mMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,12 +90,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsViewHolder> {
                 } else Toast.makeText(context, R.string.internet_connection, Toast.LENGTH_LONG).show();
             }
         });
-        holder.click_for_transition.setOnClickListener(new View.OnClickListener() {
+        /*holder.click_for_transition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callBackListener.onCallBack(Constants.ACTION_OPEN_RESTAURANT_TAB, restaurantAll);
             }
-        });
+        });*/
+        
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -44,7 +44,7 @@ public class FragmentProfile extends Fragment {
     FirebaseFirestore fStore;
     String userId;
     Button resendCode;
-    Button resetPassLocal,changeProfileImage;
+    Button resetPassLocal,changeProfileImage, logout;
     Button submitButton;
     FirebaseUser user;
     ImageView profileImage;
@@ -71,6 +71,7 @@ public class FragmentProfile extends Fragment {
         profileImage = view.findViewById(R.id.profileImage);
         changeProfileImage = view.findViewById(R.id.changeProfile);
         submitButton = view.findViewById(R.id.submit_button);
+        logout = view.findViewById(R.id.button);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -208,10 +209,15 @@ public class FragmentProfile extends Fragment {
                 }
             }
         });
-    }
 
-    public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();//logout
-        callBackListener.onCallBack(Constants.ACTION_PROFILE_TO_LOGIN, new Bundle());
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();//logout
+                callBackListener.onCallBack(Constants.ACTION_PROFILE_TO_LOGIN, new Bundle());
+            }
+        });
+
     }
 }

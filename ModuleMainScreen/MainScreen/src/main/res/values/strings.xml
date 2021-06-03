@@ -48,5 +48,6 @@
     <string name="go_route">Get directions to </string>
     <string name="distance">Distance: </string>
     <string name="distanceRouteRealTime">To the end of the route:</string>
+    <string name="show_full">Show full…</string>
 
 </resources>

@@ -154,7 +154,13 @@ public class FragmentRegistration extends Fragment {
                                     Log.d(TAG, "onFailure: " + e.toString());
                                 }
                             });
-                            callBackListener.onCallBack(Constants.ACTION_REGISTER_TO_PROFILE, new Bundle());
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("fullName", fullName);
+                            bundle.putString("email", email);
+                            bundle.putString("phone", phone);
+
+                            callBackListener.onCallBack(Constants.ACTION_REGISTER_TO_PROFILE, bundle);
 
                         }else {
                             Toast.makeText(requireActivity(), "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

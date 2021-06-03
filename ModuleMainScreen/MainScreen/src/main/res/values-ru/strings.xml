@@ -49,4 +49,5 @@
     <string name="go_route">Проложить маршрут к </string>
     <string name="distance">Расстояние: </string>
     <string name="distanceRouteRealTime">До конца маршрута:</string>
+    <string name="show_full">Показать полностью…</string>
 </resources>
