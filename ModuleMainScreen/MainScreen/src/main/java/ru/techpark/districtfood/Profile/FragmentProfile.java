@@ -36,6 +36,8 @@ import ru.techpark.districtfood.CallBackListener;
 import ru.techpark.districtfood.Constants;
 import ru.techpark.districtfood.R;
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 public class FragmentProfile extends Fragment {
 
     private static final int GALLERY_INTENT_CODE = 1023 ;
@@ -215,7 +217,8 @@ public class FragmentProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();//logout
-                callBackListener.onCallBack(Constants.ACTION_PROFILE_TO_LOGIN, new Bundle());
+                startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
+                getActivity().finish();
             }
         });
 
