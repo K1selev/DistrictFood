@@ -4,8 +4,8 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
+    android:background="@drawable/burgers_back2"
     android:weightSum="4">
 
     <ProgressBar
@@ -152,6 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_weight="2"
+            android:background="@drawable/gradient"
             android:text="@string/sign_in"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"

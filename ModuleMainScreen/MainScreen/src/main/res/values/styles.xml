@@ -32,4 +32,8 @@
         </item>
     </style>
 
+    <style name="RoundedCornerButton" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="background">@drawable/gradient</item>
+    </style>
+
 </resources>

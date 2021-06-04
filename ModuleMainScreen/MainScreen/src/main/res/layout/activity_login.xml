@@ -4,7 +4,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/burgers_back2"
     android:orientation="vertical"
     android:weightSum="4"
     tools:context=".Profile.Login">
@@ -17,11 +17,13 @@
         android:visibility="invisible"
         style="?android:attr/progressBarStyleHorizontal"/>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:background="@drawable/gradient"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -33,12 +35,12 @@
             android:layout_height="150dp"
             android:layout_marginStart="30dp"
             android:layout_marginBottom="12dp"
-            android:scaleType="centerCrop"
             android:cropToPadding="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/icon1"
-            android:padding="3dp"/>
+            app:srcCompat="@drawable/icon1" />
 
         <TextView
             android:id="@+id/userName"
@@ -46,14 +48,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="100dp"
-            tools:text="District Food"
+            android:paddingTop="15dp"
             android:text="District Food"
             android:textColor="@color/grey_500"
-            android:textStyle="bold"
             android:textSize="25dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            android:paddingTop="15dp"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:text="District Food" />
 
         <TextView
             android:id="@+id/profileEmailField"
@@ -68,67 +70,69 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:weightSum="2"
-        android:orientation="horizontal"
+        android:layout_height="180dp"
+        android:background="@drawable/inset_white"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="200dp"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+
+                android:layout_weight="1"
+                android:text="@string/welcome"
+                android:textColor="#006593"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/Email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="52dp"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+
+            android:textColor="@color/grey_500"
+            android:textColorHint="@color/grey_500"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="116dp"
+            android:layout_marginEnd="92dp"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:textColor="@color/grey_500"
+            android:textColorHint="@color/grey_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            android:layout_weight="1"
-            android:text="@string/welcome"
-            android:textSize="20sp" />
-        <Button
-            android:id="@+id/google_sign_in_button"
-            android:drawableLeft="@drawable/btn_google_dark_normal_hdpi"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/google_sign_in"
-            android:layout_marginEnd="20dp"
-            android:textColor="@color/black"
-            android:theme="@style/MyButtonSmall"
-            android:textSize="10sp"
-            tools:ignore="MissingClass" />
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/Email"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/hint_email"
-        android:textColor="@color/grey_500"
-        android:textColorHint="@color/grey_500"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/hint_password"
-        android:textColor="@color/grey_500"
-        android:textColorHint="@color/grey_500"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/emailPasswordFields"
@@ -136,6 +140,7 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:constraint_referenced_ids="Email, password"/>
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -147,43 +152,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
+
+
+
         <Button
             android:id="@+id/loginBtn"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
+            android:background="@drawable/inset"
             android:text="@string/sign_in"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Email"/>
+            android:elevation="6dp"
+            android:stateListAnimator="@null"
+            android:translationZ="4dp"
+
+            android:theme="@style/RoundedCornerButton"/>
+
 
         <Button
             android:id="@+id/forgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_weight="1"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/inset"
+            android:elevation="6dp"
+            android:stateListAnimator="@null"
+            android:translationZ="4dp"
             android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/icon_password"
             android:textColor="@color/black"
             android:text="@string/changePassword"
-            android:textSize="10sp"/>
+            android:textSize="12sp"
+            android:theme="@style/RoundedCornerButton"/>
     </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/createText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:text="New Here ?  Create Account"
         android:textColor="@color/grey_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
-
 
 
 </LinearLayout>

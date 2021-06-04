@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/burgers_back2"
     tools:context=".Profile.FragmentProfile">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -181,15 +182,16 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
-        android:text="Support"
+        android:background="@color/white"
         android:drawableLeft="@drawable/ic_support"
         android:paddingLeft="10dp"
+        android:text="Support"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/verifyMsg"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.653" />
 
     <Button
         android:id="@+id/button"
@@ -198,13 +200,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/inset_exit"
         android:text="Logout"
+        android:theme="@style/RoundedCornerButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/verifyMsg"
-        app:layout_constraintVertical_bias="1"/>
+        app:layout_constraintVertical_bias="0.777" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
