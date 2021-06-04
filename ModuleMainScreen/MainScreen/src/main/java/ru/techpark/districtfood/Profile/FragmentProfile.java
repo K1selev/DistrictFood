@@ -36,8 +36,6 @@ import ru.techpark.districtfood.CallBackListener;
 import ru.techpark.districtfood.Constants;
 import ru.techpark.districtfood.R;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
 public class FragmentProfile extends Fragment {
 
     private static final int GALLERY_INTENT_CODE = 1023 ;
@@ -121,8 +119,6 @@ public class FragmentProfile extends Fragment {
             verifyMsg.setVisibility(View.GONE);
             resendCode.setVisibility(View.GONE);
         }
-
-
 
 
         DocumentReference documentReference = fStore.collection("users").document(userId);
@@ -211,7 +207,6 @@ public class FragmentProfile extends Fragment {
                 }
             }
         });
-
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

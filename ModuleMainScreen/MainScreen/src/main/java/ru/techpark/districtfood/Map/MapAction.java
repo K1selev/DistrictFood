@@ -1,5 +1,7 @@
 package ru.techpark.districtfood.Map;
 
+import android.os.StrictMode;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -72,14 +74,23 @@ public class MapAction {
         ApplicationModified.marker = marker;
 
         GeoApiContext geoApiContext = new GeoApiContext.Builder()
-                .apiKey("AIzaSyBUzzbsW2Zxqfy-QeB-l8I2MCKsAh08RVQ")
+                .apiKey("AIzaSyDfvOVpMUJ88ExR7gt9_sp7nZe987LAK-I")
                 .build();
         DirectionsResult result = null;
         try {
-            result = DirectionsApi.newRequest(geoApiContext)
+            int SDK_INT = android.os.Build.VERSION.SDK_INT;
+            if (SDK_INT > 8)
+            {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+                result = DirectionsApi.newRequest(geoApiContext)
                     .mode(TravelMode.WALKING)
                     .origin(place)
-                    .destination(myLocation).await();
+                    .destination(myLocation)
+                    .await();
+            }
+
         } catch (ApiException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

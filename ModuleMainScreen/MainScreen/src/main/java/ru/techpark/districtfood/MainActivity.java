@@ -167,30 +167,11 @@ public class MainActivity extends AppCompatActivity implements CallBackListener{
                 navController.navigate(R.id.action_fragmentEditProfile_to_fragmentProfile, bundle);
                 break;
             }
-            case Constants.ACTION_LOGIN_TO_PROFILE: {
-                navController.navigate(R.id.action_fragmentLogin_to_fragmentProfile, bundle);
-                break;
-            }
-            case Constants.ACTION_LOGIN_TO_REGISTER: {
-                navController.navigate(R.id.action_fragmentLogin_to_navigation_profile, bundle);
-                break;
-            }
             case Constants.ACTION_PROFILE_TO_EDIT_PROFILE: {
                 navController.navigate(R.id.action_fragmentProfile_to_fragmentEditProfile, bundle);
                 break;
             }
-            case Constants.ACTION_PROFILE_TO_LOGIN: {
-                navController.navigate(R.id.action_fragmentProfile_to_fragmentLogin, bundle);
-                break;
-            }
-            case Constants.ACTION_REGISTER_TO_PROFILE: {
-                navController.navigate(R.id.action_navigation_profile_to_fragmentProfile, bundle);
-                break;
-            }
-            case Constants.ACTION_REGISTER_TO_LOGIN: {
-                navController.navigate(R.id.action_navigation_profile_to_fragmentLogin, bundle);
-                break;
-            }
+
         }
     }
 

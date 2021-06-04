@@ -42,8 +42,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
@@ -208,12 +207,7 @@ public class FragmentMap extends Fragment implements
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true;
-        } /*else if (shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            PermissionUtils.RationaleDialog.newInstance(PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION, false)
-                    .show(getChildFragmentManager(), "dialog");
-        }*/
+        }
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissionLauncher.launch(
                     Manifest.permission.ACCESS_FINE_LOCATION);
@@ -239,10 +233,11 @@ public class FragmentMap extends Fragment implements
     }
 
     private void getDeviceLocationOnStart() {
-        try {
+        /*try {
             if (locationPermissionGranted) {
+
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener( (MainActivity) requireActivity(), new OnCompleteListener<Location>() {
+                locationResult.addOnCompleteListener(requireActivity(), new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
@@ -274,7 +269,44 @@ public class FragmentMap extends Fragment implements
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
+        }*/
+
+        try {
+            if (locationPermissionGranted) {
+                fusedLocationProviderClient.getLastLocation()
+                        .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
+                                if (location != null) {
+                                    if (lastKnownLocation == null) {
+                                        lastKnownLocation = location;
+                                    }
+                                    if (cameraPosition == null) {
+                                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                                new LatLng(lastKnownLocation.getLatitude(),
+                                                        lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                                    } else {
+                                        map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                                    }
+
+                                    com.google.maps.model.LatLng location123 = new com.google.maps.model.LatLng(
+                                            lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                                    ApplicationModified.myLocation = location123;
+
+                                    GO_ACTION(location123);
+                                } else {
+                                    map.moveCamera(CameraUpdateFactory
+                                            .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                                    map.getUiSettings().setMyLocationButtonEnabled(false);
+                                }
+                            }
+                        });
+            }
+        } catch (SecurityException e) {
+            //Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage());
         }
+
     }
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =

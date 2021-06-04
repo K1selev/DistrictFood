@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -86,11 +90,26 @@ public class FragmentEditProfile extends Fragment {
             }
         });
 
+        ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+
+                            Uri uri = result.getData().getData();
+                            uploadImageToFirebase(uri);
+                            // Handle the Intent
+                        }
+                    }
+                });
+
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(openGalleryIntent,1000);
+                //startActivityForResult(openGalleryIntent,1000);
+                mStartForResult.launch(openGalleryIntent);
             }
         });
 
@@ -139,7 +158,7 @@ public class FragmentEditProfile extends Fragment {
     }
 
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1000){
@@ -154,7 +173,9 @@ public class FragmentEditProfile extends Fragment {
             }
         }
 
-    }
+    }*/
+
+
 
     private void uploadImageToFirebase(Uri imageUri) {
         // upload image to firebase storage

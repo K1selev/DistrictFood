@@ -49,19 +49,6 @@
         tools:layout="@layout/fragment_map" />
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="ru.techpark.districtfood.Profile.FragmentRegistration"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_navigation_profile_to_fragmentProfile"
-            app:destination="@id/fragmentProfile" />
-        <action
-            android:id="@+id/action_navigation_profile_to_fragmentLogin"
-            app:destination="@id/fragmentLogin" />
-    </fragment>
-
-    <fragment
         android:id="@+id/navigation_card"
         android:name="ru.techpark.districtfood.RestaurantTab.FragmentRestaurantTab"
         android:label="@string/title_main_screen"
@@ -123,16 +110,13 @@
         tools:layout="@layout/fragment_feedbacks"/>
 
     <fragment
-        android:id="@+id/fragmentProfile"
+        android:id="@+id/navigation_profile"
         android:name="ru.techpark.districtfood.Profile.FragmentProfile"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_fragmentProfile_to_fragmentEditProfile"
             app:destination="@id/fragmentEditProfile" />
-        <action
-            android:id="@+id/action_fragmentProfile_to_fragmentLogin"
-            app:destination="@id/fragmentLogin" />
     </fragment>
     <fragment
         android:id="@+id/fragmentEditProfile"
@@ -142,18 +126,6 @@
         >
         <action
             android:id="@+id/action_fragmentEditProfile_to_fragmentProfile"
-            app:destination="@id/fragmentProfile" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentLogin"
-        android:name="ru.techpark.districtfood.Profile.FragmentLogin"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_fragmentLogin_to_navigation_profile"
             app:destination="@id/navigation_profile" />
-        <action
-            android:id="@+id/action_fragmentLogin_to_fragmentProfile"
-            app:destination="@id/fragmentProfile" />
     </fragment>
 </navigation>
